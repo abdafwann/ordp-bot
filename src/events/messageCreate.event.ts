@@ -3,6 +3,7 @@ import { ExtendedClient } from "../core/client.js";
 import { levelingService } from "../modules/community/leveling.service.js";
 import { aiService } from "../modules/ai/ai.service.js";
 import { autoModService } from "../modules/moderation/automod.service.js";
+import { utilityService } from "../modules/community/utility.service.js";
 import { env } from "../config/env.js";
 
 export function registerMessageCreateEvent(client: ExtendedClient) {
@@ -77,6 +78,39 @@ export function registerMessageCreateEvent(client: ExtendedClient) {
         } catch (err) {
           console.error("[AutoMod Error]", err);
         }
+      }
+    }
+
+    // 0.5 AFK Status Processing
+    if (message.guild) {
+      try {
+        // Clear AFK if the message author was AFK
+        const authorAfk = await utilityService.getAfk(message.guild.id, message.author.id);
+        if (authorAfk) {
+          await utilityService.clearAfk(message.guild.id, message.author.id);
+          if ("send" in message.channel) {
+            const afkMsg = await message.channel.send({
+              content: `👋 Welcome back <@${message.author.id}>, I have removed your AFK status.`,
+            }).catch(() => null);
+            if (afkMsg) {
+              setTimeout(() => afkMsg.delete().catch(() => null), 5000);
+            }
+          }
+        }
+
+        // Notify if author mentioned any AFK members
+        for (const [mentionedUserId] of message.mentions.users) {
+          if (mentionedUserId === message.author.id) continue;
+          const targetAfk = await utilityService.getAfk(message.guild.id, mentionedUserId);
+          if (targetAfk && "send" in message.channel) {
+            const timeAgo = Math.floor(targetAfk.createdAt.getTime() / 1000);
+            await message.reply({
+              content: `💤 <@${mentionedUserId}> is currently AFK: **${targetAfk.reason}** (<t:${timeAgo}:R>).`,
+            }).catch(() => null);
+          }
+        }
+      } catch (err) {
+        console.error("[AFK Processing Error]", err);
       }
     }
 

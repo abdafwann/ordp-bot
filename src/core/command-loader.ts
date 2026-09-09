@@ -13,6 +13,11 @@ import {
   coinflipCommand,
   payCommand,
 } from "../modules/community/commands/economy.command.js";
+import { pollCommand } from "../modules/community/commands/poll.command.js";
+import { afkCommand } from "../modules/community/commands/afk.command.js";
+import { remindCommand } from "../modules/community/commands/remind.command.js";
+import { userInfoCommand, serverInfoCommand } from "../modules/community/commands/info.command.js";
+import { embedCommand } from "../modules/community/commands/embed.command.js";
 
 // Moderation Commands
 import {
@@ -49,6 +54,12 @@ export const allCommands: Command[] = [
   balanceCommand,
   coinflipCommand,
   payCommand,
+  pollCommand,
+  afkCommand,
+  remindCommand,
+  userInfoCommand,
+  serverInfoCommand,
+  embedCommand,
   warnCommand,
   warningsCommand,
   timeoutCommand,

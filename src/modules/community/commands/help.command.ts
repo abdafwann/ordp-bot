@@ -23,7 +23,13 @@ export const helpCommand: Command = {
           name: '📊 Community & Leveling',
           value:
             "`· /rank [user]` — Check your or another user's rank and XP\n" +
-            '`· /leaderboard` — View the top 10 users with highest XP',
+            '`· /leaderboard` — View the top 10 users with highest XP\n' +
+            '`· /poll <question> <opt1> <opt2>...` — Create an interactive live poll\n' +
+            '`· /afk [reason]` — Set your AFK status\n' +
+            '`· /remindme <time> <message>` — Schedule a reminder (e.g. 10m, 2h)\n' +
+            '`· /userinfo [user]` — Inspect detailed member profile\n' +
+            '`· /serverinfo` — View live server statistics\n' +
+            '`· /embed <title> <desc>` — Send a custom formatted embed',
         },
         {
           name: '💰 Economy',
@@ -34,7 +40,7 @@ export const helpCommand: Command = {
             '`· /pay <user> <amount>` — Transfer coins to another member',
         },
         {
-          name: '🛡️ Moderation',
+          name: '🛡️ Moderation & Management',
           value:
             '`· /warn <user> <reason>` — Warn a user\n' +
             '`· /warnings <user>` — View user warning history\n' +
@@ -43,7 +49,8 @@ export const helpCommand: Command = {
             '`· /ban <user> [reason]` — Ban a member\n' +
             '`· /clear <amount>` — Bulk delete messages\n' +
             '`· /ticket-setup <channel>` — Setup a ticket support panel\n' +
-            '`· /automod` — Manage server auto-mod, blocklist & spam settings',
+            '`· /automod` — Manage server auto-mod, blocklist & spam settings\n' +
+            '`· /github` — Configure GitHub repo webhooks and notifications',
         },
         {
           name: '🎵 Music',

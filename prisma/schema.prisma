@@ -5,6 +5,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/client"
 }
 
 model GuildConfig {
@@ -88,4 +89,39 @@ model Ticket {
   status    String    @default("OPEN") // "OPEN" | "CLOSED"
   createdAt DateTime  @default(now())
   closedAt  DateTime?
+}
+
+model AfkStatus {
+  id        String   @id @default(cuid())
+  guildId   String
+  userId    String
+  reason    String   @default("AFK")
+  createdAt DateTime @default(now())
+
+  @@unique([guildId, userId])
+}
+
+model Reminder {
+  id          String   @id @default(cuid())
+  guildId     String?
+  channelId   String
+  userId      String
+  message     String
+  remindAt    DateTime
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([remindAt, isCompleted])
+}
+
+model Poll {
+  id        String   @id @default(cuid())
+  messageId String   @unique
+  channelId String
+  guildId   String
+  question  String
+  options   String   // JSON string of options
+  votes     String   @default("{}") // JSON string of userId -> optionIndex
+  creatorId String
+  createdAt DateTime @default(now())
 }

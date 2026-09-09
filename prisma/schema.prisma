@@ -1,0 +1,91 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model GuildConfig {
+  guildId          String   @id
+  welcomeChannelId String?
+  welcomeMessage   String?
+  autoRoleId       String?
+  logChannelId     String?
+  githubChannelId  String?
+  aiChannelId      String?
+  antiInvite       Boolean  @default(false)
+  antiLinks        Boolean  @default(false)
+  antiSpam         Boolean  @default(false)
+  maxMentions      Int      @default(0)
+  blockedWords     String   @default("[]")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model AiConversation {
+  id        String      @id @default(cuid())
+  guildId   String
+  channelId String
+  userId    String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  messages  AiMessage[]
+
+  @@index([channelId, updatedAt])
+}
+
+model AiMessage {
+  id             String         @id @default(cuid())
+  conversationId String
+  conversation   AiConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  role           String         // "user" | "assistant" | "system"
+  content        String
+  createdAt      DateTime       @default(now())
+
+  @@index([conversationId, createdAt])
+}
+
+model UserLevel {
+  id        String   @id @default(cuid())
+  guildId   String
+  userId    String
+  xp        Int      @default(0)
+  level     Int      @default(1)
+  lastXpAt  DateTime @default(now())
+
+  @@unique([guildId, userId])
+  @@index([guildId, xp])
+}
+
+model UserEconomy {
+  id          String    @id @default(cuid())
+  guildId     String
+  userId      String
+  balance     Int       @default(100)
+  lastDailyAt DateTime?
+
+  @@unique([guildId, userId])
+}
+
+model Warning {
+  id          String   @id @default(cuid())
+  guildId     String
+  userId      String
+  moderatorId String
+  reason      String
+  createdAt   DateTime @default(now())
+
+  @@index([guildId, userId])
+}
+
+model Ticket {
+  id        String    @id @default(cuid())
+  guildId   String
+  channelId String    @unique
+  userId    String
+  status    String    @default("OPEN") // "OPEN" | "CLOSED"
+  createdAt DateTime  @default(now())
+  closedAt  DateTime?
+}

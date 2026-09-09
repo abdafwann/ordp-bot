@@ -41,7 +41,7 @@ model AiMessage {
   id             String         @id @default(cuid())
   conversationId String
   conversation   AiConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  role           String         // "user" | "assistant" | "system"
+  role           String // "user" | "assistant" | "system"
   content        String
   createdAt      DateTime       @default(now())
 
@@ -49,12 +49,12 @@ model AiMessage {
 }
 
 model UserLevel {
-  id        String   @id @default(cuid())
-  guildId   String
-  userId    String
-  xp        Int      @default(0)
-  level     Int      @default(1)
-  lastXpAt  DateTime @default(now())
+  id       String   @id @default(cuid())
+  guildId  String
+  userId   String
+  xp       Int      @default(0)
+  level    Int      @default(1)
+  lastXpAt DateTime @default(now())
 
   @@unique([guildId, userId])
   @@index([guildId, xp])
@@ -120,7 +120,7 @@ model Poll {
   channelId String
   guildId   String
   question  String
-  options   String   // JSON string of options
+  options   String // JSON string of options
   votes     String   @default("{}") // JSON string of userId -> optionIndex
   creatorId String
   createdAt DateTime @default(now())

@@ -2,6 +2,7 @@ import { Events, Interaction } from "discord.js";
 import { ExtendedClient } from "../core/client.js";
 import { handleTicketInteraction } from "../modules/moderation/commands/ticket.command.js";
 import { handleAutoModInteraction } from "../modules/moderation/commands/automod.command.js";
+import { handlePollInteraction } from "../modules/community/commands/poll.command.js";
 
 export function registerInteractionCreateEvent(client: ExtendedClient) {
   client.on(Events.InteractionCreate, async (interaction: Interaction) => {
@@ -30,6 +31,13 @@ export function registerInteractionCreateEvent(client: ExtendedClient) {
     }
 
     if (interaction.isButton()) {
+      if (interaction.customId.startsWith("poll_vote_")) {
+        await handlePollInteraction(interaction).catch((err) => {
+          console.error("Poll button interaction error:", err);
+        });
+        return;
+      }
+
       if (interaction.customId.startsWith("automod_")) {
         await handleAutoModInteraction(interaction).catch((err) => {
           console.error("AutoMod button interaction error:", err);

@@ -5,6 +5,7 @@ import { registerInteractionCreateEvent } from "./events/interactionCreate.event
 import { registerMessageCreateEvent } from "./events/messageCreate.event.js";
 import { registerVoiceStateUpdateEvent } from "./events/voiceStateUpdate.event.js";
 import { startAiCleanupCron } from "./cron/ai-cleanup.cron.js";
+import { startReminderCron } from "./cron/reminder.cron.js";
 import { startWebhookServer } from "./server/webhook-server.js";
 import { env } from "./config/env.js";
 
@@ -22,6 +23,7 @@ export async function bootstrap() {
 
   // 2. Start Background Services
   startAiCleanupCron();
+  startReminderCron(client);
   startWebhookServer(client, env.PORT);
 
   // 3. Login to Discord

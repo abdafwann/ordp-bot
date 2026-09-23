@@ -7,14 +7,22 @@ import {
   formatPushEvent,
   formatPullRequestEvent,
   formatIssuesEvent,
+  formatWorkflowRunEvent,
 } from "../modules/github/github.formatter.js";
+import { resolveRepoChannelId } from "../modules/github/github.router.js";
 
 export function createWebhookServer(client: Client) {
   const server = http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
     // Health check endpoint
     if (req.method === "GET" && req.url === "/health") {
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ status: "healthy", bot: client.user?.tag || "offline" }));
+      res.end(
+        JSON.stringify({
+          status: "healthy",
+          bot: client.user?.tag || "offline",
+          uptime: Math.floor(process.uptime()),
+        })
+      );
       return;
     }
 
@@ -54,45 +62,38 @@ export function createWebhookServer(client: Client) {
             embed = formatPullRequestEvent(payload);
           } else if (githubEvent === "issues") {
             embed = formatIssuesEvent(payload);
+          } else if (githubEvent === "workflow_run") {
+            embed = formatWorkflowRunEvent(payload);
           }
 
           if (embed) {
-            // 1. Send Direct Message to Bot Owner if BOT_OWNER_ID is configured
-            if (env.BOT_OWNER_ID) {
-              try {
-                const owner = await client.users.fetch(env.BOT_OWNER_ID).catch(() => null);
-                if (owner) {
-                  await owner.send({ embeds: [embed] }).catch((dmErr) => {
-                    console.error("[GitHub DM Error] Could not DM bot owner:", dmErr);
-                  });
-                }
-              } catch (err) {
-                console.error("[GitHub DM Fetch Error]", err);
-              }
-            }
+            const repoFullName = (payload as { repository?: { full_name?: string } })
+              .repository?.full_name;
 
-            // 2. Find target channel (from DB guild configs or fallback to env default channel)
-            const configs = await prisma.guildConfig.findMany({
-              where: {
-                githubChannelId: { not: null },
-              },
-            });
+            const mappings = await prisma.repoChannel.findMany();
+            const mapping = new Map(
+              mappings.map((m) => [m.repoFullName.toLowerCase(), m.channelId])
+            );
 
-            const channelIds = new Set<string>();
-            if (env.GITHUB_DEFAULT_CHANNEL_ID) {
-              channelIds.add(env.GITHUB_DEFAULT_CHANNEL_ID);
-            }
-            for (const cfg of configs) {
-              if (cfg.githubChannelId) channelIds.add(cfg.githubChannelId);
-            }
+            const targetId = resolveRepoChannelId(
+              repoFullName,
+              mapping,
+              env.GITHUB_FALLBACK_CHANNEL_ID
+            );
 
-            for (const chId of channelIds) {
-              const channel = await client.channels.fetch(chId).catch(() => null);
+            if (targetId) {
+              const channel = await client.channels.fetch(targetId).catch(() => null);
               if (channel && channel.isTextBased()) {
                 await (channel as TextChannel).send({ embeds: [embed] }).catch((err) => {
-                  console.error(`Failed to send GitHub embed to channel ${chId}:`, err);
+                  console.error(`Failed to send GitHub embed to channel ${targetId}:`, err);
                 });
+              } else {
+                console.error(`[GitHub Webhook] Target channel ${targetId} is not text-based.`);
               }
+            } else {
+              console.warn(
+                `[GitHub Webhook] No channel for repo "${repoFullName}" and no fallback configured; event dropped.`
+              );
             }
           }
 

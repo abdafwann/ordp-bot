@@ -32,6 +32,11 @@ export function parseRate(input: string): ParsedRate {
     if (items <= 0) {
       throw new InvalidRateError("Items count in rate must be greater than 0.");
     }
+    if (wl === 0) {
+      throw new InvalidRateError(
+        "Currency amount cannot be zero. Use 'free' for zero-cost ingredients."
+      );
+    }
     if (wl < 0) {
       throw new InvalidRateError("Currency amount in rate cannot be negative.");
     }
@@ -47,6 +52,11 @@ export function parseRate(input: string): ParsedRate {
     const wl = parseFloat(absoluteMatch[1]);
     const currency = normalizeCurrency(absoluteMatch[2]);
 
+    if (wl === 0) {
+      throw new InvalidRateError(
+        "Currency amount cannot be zero. Use 'free' for zero-cost ingredients."
+      );
+    }
     if (wl < 0) {
       throw new InvalidRateError("Currency amount cannot be negative.");
     }

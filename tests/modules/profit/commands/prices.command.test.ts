@@ -38,12 +38,11 @@ describe("/prices command", () => {
       respond: vi.fn(),
     } as any;
 
-    if (pricesCommand.autocomplete) {
-      await pricesCommand.autocomplete(mockInteraction);
-      expect(mockInteraction.respond).toHaveBeenCalledWith([
-        { name: "Dough", value: "Dough" },
-      ]);
-    }
+    expect(pricesCommand.autocomplete).toBeDefined();
+    await pricesCommand.autocomplete!(mockInteraction);
+    expect(mockInteraction.respond).toHaveBeenCalledWith([
+      { name: "Dough", value: "Dough" },
+    ]);
   });
 
   it("should reject set command when missing guild context", async () => {

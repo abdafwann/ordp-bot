@@ -48,6 +48,15 @@ describe("Rate Parser and Normalizer", () => {
     expect(() => parseRate("abc/def")).toThrow(InvalidRateError);
   });
 
+  it("should reject zero currency amount unless marked free", () => {
+    expect(() => parseRate("200/0")).toThrow(InvalidRateError);
+    expect(() => parseRate("200/0")).toThrow(
+      "Currency amount cannot be zero. Use 'free' for zero-cost ingredients."
+    );
+    expect(() => parseRate("0wl")).toThrow(InvalidRateError);
+    expect(parseRate("free").isFree).toBe(true);
+  });
+
   it("should format rates and WL numbers cleanly", () => {
     const r = parseRate("200/150");
     expect(formatRate(r)).toBe("200/150 WL");

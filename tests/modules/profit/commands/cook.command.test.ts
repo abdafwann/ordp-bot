@@ -46,12 +46,11 @@ describe("/cook command", () => {
       respond: vi.fn(),
     } as any;
 
-    if (cookCommand.autocomplete) {
-      await cookCommand.autocomplete(mockInteraction);
-      expect(mockInteraction.respond).toHaveBeenCalledWith([
-        { name: "Pizza", value: "Pizza" },
-      ]);
-    }
+    expect(cookCommand.autocomplete).toBeDefined();
+    await cookCommand.autocomplete!(mockInteraction);
+    expect(mockInteraction.respond).toHaveBeenCalledWith([
+      { name: "Pizza", value: "Pizza" },
+    ]);
   });
 
   it("should reply with missing prices help when status is missing_prices", async () => {

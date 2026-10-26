@@ -1,4 +1,4 @@
-import { Events, Interaction } from "discord.js";
+import { Events, Interaction, MessageFlags, type InteractionReplyOptions } from "discord.js";
 import { ExtendedClient } from "../core/client.js";
 import { handleTicketInteraction } from "../modules/moderation/commands/ticket.command.js";
 import { handleAutoModInteraction } from "../modules/moderation/commands/automod.command.js";
@@ -6,6 +6,14 @@ import { handlePollInteraction } from "../modules/community/commands/poll.comman
 
 export function registerInteractionCreateEvent(client: ExtendedClient) {
   client.on(Events.InteractionCreate, async (interaction: Interaction) => {
+    if (interaction.isAutocomplete()) {
+      const command = client.commands.get(interaction.commandName);
+      if (command?.autocomplete) {
+        await command.autocomplete(interaction).catch(() => null);
+      }
+      return;
+    }
+
     if (interaction.isChatInputCommand()) {
       const command = client.commands.get(interaction.commandName);
       if (!command) {
@@ -17,9 +25,9 @@ export function registerInteractionCreateEvent(client: ExtendedClient) {
         await command.execute(interaction);
       } catch (error) {
         console.error(`Error executing command ${interaction.commandName}:`, error);
-        const replyPayload = {
+        const replyPayload: InteractionReplyOptions = {
           content: "❌ An error occurred while executing this command.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         };
         if (interaction.replied || interaction.deferred) {
           await interaction.followUp(replyPayload).catch(() => null);

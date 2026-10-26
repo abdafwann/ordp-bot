@@ -45,6 +45,11 @@ import {
   nowPlayingCommand,
 } from "../modules/music/commands/music-controls.command.js";
 
+// Profit / Cooking Commands
+import { cookCommand } from "../modules/profit/commands/cook.command.js";
+import { pricesCommand } from "../modules/profit/commands/prices.command.js";
+import { recipeCommand } from "../modules/profit/commands/recipe.command.js";
+
 export const allCommands: Command[] = [
   helpCommand,
   askCommand,
@@ -76,6 +81,11 @@ export const allCommands: Command[] = [
   stopCommand,
   queueCommand,
   nowPlayingCommand,
+
+  // Profit Commands
+  cookCommand,
+  pricesCommand,
+  recipeCommand,
 ];
 
 export function registerCommands(client: ExtendedClient) {

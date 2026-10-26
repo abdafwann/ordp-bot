@@ -51,4 +51,45 @@ describe("Database Client & Schema CRUD", () => {
 
     expect(userEco.balance).toBe(250);
   });
+
+  it("should create and manage IngredientPrice", async () => {
+    const price = await prisma.ingredientPrice.upsert({
+      where: {
+        guildId_name: {
+          guildId: "test-guild-123",
+          name: "dough",
+        },
+      },
+      create: {
+        guildId: "test-guild-123",
+        name: "dough",
+        items: 200,
+        wl: 150,
+        currency: "WL",
+        updatedBy: "user-456",
+      },
+      update: {
+        items: 200,
+        wl: 150,
+      },
+    });
+
+    expect(price.guildId).toBe("test-guild-123");
+    expect(price.name).toBe("dough");
+    expect(price.items).toBe(200);
+    expect(price.wl).toBe(150);
+    expect(price.currency).toBe("WL");
+
+    const fetched = await prisma.ingredientPrice.findUnique({
+      where: {
+        guildId_name: {
+          guildId: "test-guild-123",
+          name: "dough",
+        },
+      },
+    });
+    expect(fetched?.name).toBe("dough");
+
+    await prisma.ingredientPrice.deleteMany({ where: { guildId: "test-guild-123" } });
+  });
 });

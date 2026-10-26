@@ -5,7 +5,6 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/client"
 }
 
 model GuildConfig {
@@ -124,4 +123,25 @@ model Poll {
   votes     String   @default("{}") // JSON string of userId -> optionIndex
   creatorId String
   createdAt DateTime @default(now())
+}
+
+model RepoChannel {
+  repoFullName String   @id // "owner/repo"
+  channelId    String
+  createdAt    DateTime @default(now())
+}
+
+model IngredientPrice {
+  id        String   @id @default(cuid())
+  guildId   String
+  name      String
+  items     Int
+  wl        Float
+  currency  String   @default("WL")
+  updatedBy String
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@unique([guildId, name])
+  @@index([guildId])
 }

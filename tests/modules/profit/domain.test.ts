@@ -10,6 +10,9 @@ import {
   InvalidRateError,
   RecipeNotFoundError,
   MissingPricesError,
+  InvalidQuantityError,
+  MissingQuantityChoiceError,
+  CalculationOverflowError,
 } from "../../../src/modules/profit/domain/errors.js";
 
 describe("Profit Domain Constants & Errors", () => {
@@ -32,5 +35,17 @@ describe("Profit Domain Constants & Errors", () => {
 
     const missingErr = new MissingPricesError(["dough", "tomato"]);
     expect(missingErr.missing).toEqual(["dough", "tomato"]);
+
+    const qtyErr = new InvalidQuantityError("Quantity must be an integer.");
+    expect(qtyErr).toBeInstanceOf(DomainError);
+    expect(qtyErr.message).toBe("Quantity must be an integer.");
+
+    const choiceErr = new MissingQuantityChoiceError("Sugar", { min: 2, max: 3 });
+    expect(choiceErr).toBeInstanceOf(DomainError);
+    expect(choiceErr.message).toContain("Sugar");
+    expect(choiceErr.message).toContain("2-3");
+
+    const overflowErr = new CalculationOverflowError();
+    expect(overflowErr).toBeInstanceOf(DomainError);
   });
 });

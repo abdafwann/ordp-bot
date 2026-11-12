@@ -42,6 +42,9 @@ export const helpCommand: Command = {
         {
           name: '🛡️ Moderation & Management',
           value:
+            '`· /role add <user> <role>` — Add a role to a member\n' +
+            '`· /role remove <user> <role>` — Remove a role from a member\n' +
+            '`· /role info <role>` — Inspect role properties & permissions\n' +
             '`· /warn <user> <reason>` — Warn a user\n' +
             '`· /warnings <user>` — View user warning history\n' +
             '`· /timeout <user> <minutes> [reason]` — Timeout a member\n' +

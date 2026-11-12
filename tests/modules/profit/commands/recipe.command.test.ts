@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
 import { recipeCommand } from "../../../../src/modules/profit/commands/recipe.command.js";
-import { recipeRepository } from "../../../../src/modules/profit/data/recipe.repository.js";
 
 describe("/recipe command", () => {
   it("should have correct command definition", () => {
@@ -14,7 +13,7 @@ describe("/recipe command", () => {
     const mockInteraction = {
       options: {
         getSubcommand: () => "view",
-        getString: () => "pizza",
+        getString: () => "Berry Crepes",
       },
       reply,
     } as any;
@@ -26,11 +25,45 @@ describe("/recipe command", () => {
         embeds: expect.arrayContaining([
           expect.objectContaining({
             data: expect.objectContaining({
-              title: expect.stringContaining("Pizza"),
+              title: expect.stringContaining("Berry Crepes"),
             }),
           }),
         ]),
       })
     );
+  });
+
+  it("should display the wiki quantity range for Detective Butter Lamb sugar", async () => {
+    const reply = vi.fn();
+    const mockInteraction = {
+      options: {
+        getSubcommand: () => "view",
+        getString: () => "Detective Butter Lamb",
+      },
+      reply,
+    } as any;
+
+    await recipeCommand.execute(mockInteraction);
+
+    const embed = reply.mock.calls[0][0].embeds[0];
+    const text = JSON.stringify(embed);
+    expect(text).toContain("2-3x Sugar");
+    expect(text).not.toContain("1x Sugar");
+  });
+
+  it("should keep scalar quantities unchanged for other recipes", async () => {
+    const reply = vi.fn();
+    const mockInteraction = {
+      options: {
+        getSubcommand: () => "view",
+        getString: () => "Berry Crepes",
+      },
+      reply,
+    } as any;
+
+    await recipeCommand.execute(mockInteraction);
+
+    const text = JSON.stringify(reply.mock.calls[0][0].embeds[0]);
+    expect(text).toContain("1x Flour");
   });
 });

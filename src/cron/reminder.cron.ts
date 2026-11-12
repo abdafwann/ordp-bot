@@ -3,12 +3,13 @@ import { utilityService } from "../modules/community/utility.service.js";
 import { EmbedBuilder, TextChannel } from "discord.js";
 
 export function startReminderCron(client: ExtendedClient) {
+  let polling = false;
   setInterval(async () => {
+    if (polling) return;
+    polling = true;
     try {
       const dueReminders = await utilityService.getDueReminders();
       for (const reminder of dueReminders) {
-        await utilityService.completeReminder(reminder.id);
-
         const embed = new EmbedBuilder()
           .setColor(0xf1c40f)
           .setTitle("⏰ Reminder Alert")
@@ -37,15 +38,21 @@ export function startReminderCron(client: ExtendedClient) {
           try {
             const user = await client.users.fetch(reminder.userId).catch(() => null);
             if (user) {
-              await user.send({ embeds: [embed] }).catch(() => null);
+              await user.send({ embeds: [embed] });
+              delivered = true;
             }
           } catch {
             // DM might be closed
           }
         }
+        if (delivered) {
+          await utilityService.completeReminder(reminder.id);
+        }
       }
     } catch (err) {
       console.error("[Reminder Interval Error]", err);
+    } finally {
+      polling = false;
     }
   }, 10000);
 }

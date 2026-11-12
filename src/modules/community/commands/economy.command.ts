@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder, MessageFlags } from "discord.js";
 import { Command } from "../../../types/command.js";
 import { economyService } from "../economy.service.js";
 
@@ -16,7 +16,7 @@ export const dailyCommand: Command = {
       const minutes = Math.floor((result.remainingMs % (1000 * 60 * 60)) / (1000 * 60));
       await interaction.reply({
         content: `⏳ You have already claimed your daily reward! Please wait **${hours}h ${minutes}m** before claiming again.`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -80,7 +80,7 @@ export const coinflipCommand: Command = {
     const result = await economyService.coinflip(guildId, interaction.user.id, amount, choice);
 
     if (!result.success) {
-      await interaction.reply({ content: `❌ ${result.error}`, ephemeral: true });
+      await interaction.reply({ content: `❌ ${result.error}`, flags: MessageFlags.Ephemeral });
       return;
     }
 
@@ -113,7 +113,7 @@ export const payCommand: Command = {
     const guildId = interaction.guildId || "dm";
 
     if (target.bot) {
-      await interaction.reply({ content: "❌ You cannot send coins to a bot.", ephemeral: true });
+      await interaction.reply({ content: "❌ You cannot send coins to a bot.", flags: MessageFlags.Ephemeral });
       return;
     }
 
@@ -125,7 +125,7 @@ export const payCommand: Command = {
     );
 
     if (!result.success) {
-      await interaction.reply({ content: `❌ ${result.error}`, ephemeral: true });
+      await interaction.reply({ content: `❌ ${result.error}`, flags: MessageFlags.Ephemeral });
       return;
     }
 

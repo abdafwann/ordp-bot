@@ -7,6 +7,7 @@ import {
   PermissionFlagsBits,
   ButtonInteraction,
   ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 import { Command } from "../../../types/command.js";
 import { autoModService } from "../automod.service.js";
@@ -130,7 +131,7 @@ export const automodCommand: Command = {
     if (!interaction.guildId || !interaction.guild) {
       await interaction.reply({
         content: "❌ This command can only be used in a server.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -144,7 +145,7 @@ export const automodCommand: Command = {
     if (!hasAdmin) {
       await interaction.reply({
         content: "❌ You do not have permission to manage Auto-Mod settings.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -157,7 +158,7 @@ export const automodCommand: Command = {
       await interaction.reply({
         embeds: [embed],
         components: [row],
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -167,7 +168,7 @@ export const automodCommand: Command = {
       const words = await autoModService.addBlockedWord(interaction.guildId, word);
       await interaction.reply({
         content: `✅ Added \`${word.toLowerCase()}\` to the server blocklist. Total blocked words: ${words.length}.`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -177,7 +178,7 @@ export const automodCommand: Command = {
       const words = await autoModService.removeBlockedWord(interaction.guildId, word);
       await interaction.reply({
         content: `✅ Removed \`${word.toLowerCase()}\` from the blocklist. Total blocked words: ${words.length}.`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -187,7 +188,7 @@ export const automodCommand: Command = {
       if (words.length === 0) {
         await interaction.reply({
           content: "ℹ️ No blocked words currently configured for this server.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -200,7 +201,7 @@ export const automodCommand: Command = {
 
       await interaction.reply({
         embeds: [embed],
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -213,7 +214,7 @@ export const automodCommand: Command = {
           limit > 0
             ? `✅ Max mentions threshold set to **${limit}** mentions per message.`
             : "✅ Mass mentions protection disabled (set to 0).",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   },
@@ -233,7 +234,7 @@ export async function handleAutoModInteraction(interaction: ButtonInteraction) {
   if (!hasAdmin) {
     await interaction.reply({
       content: "❌ You do not have permission to modify Auto-Mod settings.",
-      ephemeral: true,
+      flags: MessageFlags.Ephemeral,
     });
     return;
   }

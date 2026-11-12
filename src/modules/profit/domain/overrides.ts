@@ -14,14 +14,24 @@ export function parseOverrides(input?: string): Map<string, OverrideAction> {
     return result;
   }
 
-  const tokens = input
-    .split(/[,;\s]+/)
-    .map((t) => t.trim())
-    .filter(Boolean);
+  let tokens: string[];
+  if (/[,;\n\r]/.test(input)) {
+    tokens = input
+      .split(/[,;\n\r]+/)
+      .map((t) => t.trim())
+      .filter(Boolean);
+  } else {
+    const spaceTokens = input.trim().split(/\s+/);
+    if (spaceTokens.length > 1 && spaceTokens.every((t) => t.includes(":") || t.includes("="))) {
+      tokens = spaceTokens;
+    } else {
+      tokens = [input.trim()];
+    }
+  }
 
   for (const token of tokens) {
-    const colonIndex = token.indexOf(":");
-    if (colonIndex === -1 || colonIndex === 0 || colonIndex === token.length - 1) {
+    const colonIndex = token.search(/[:=]/);
+    if (colonIndex === -1) {
       throw new InvalidOverrideError(
         `Invalid override "${token}". Expected format: "<ingredient>:<rate|free|include|skip>"`
       );
@@ -29,6 +39,16 @@ export function parseOverrides(input?: string): Map<string, OverrideAction> {
 
     const name = token.slice(0, colonIndex).toLowerCase().trim();
     const actionRaw = token.slice(colonIndex + 1).toLowerCase().trim();
+
+    if (!name) {
+      throw new InvalidOverrideError(
+        `Invalid override "${token}". Expected format: "<ingredient>:<rate|free|include|skip>"`
+      );
+    }
+
+    if (!actionRaw) {
+      continue;
+    }
 
     if (actionRaw === "free") {
       result.set(name, { kind: "free" });
@@ -40,7 +60,7 @@ export function parseOverrides(input?: string): Map<string, OverrideAction> {
       try {
         const parsedRate = parseRate(actionRaw);
         result.set(name, { kind: "rate", parsedRate });
-      } catch (err) {
+      } catch {
         throw new InvalidOverrideError(
           `Invalid override value for "${name}": "${actionRaw}". Use a rate (e.g. 200/150), free, include, or skip.`
         );

@@ -128,10 +128,14 @@ export function registerMessageCreateEvent(client: ExtendedClient) {
       }
     }
 
-    // 2. AI Chat (Triggered via Dedicated AI Channel OR @Bot Mention)
+    // 2. AI Chat (Triggered via Dedicated AI Channels OR @Bot Mention)
     const botMention = `<@${client.user?.id}>`;
     const botNickMention = `<@!${client.user?.id}>`;
-    const isAiChannel = Boolean(env.AI_CHANNEL_ID && message.channelId === env.AI_CHANNEL_ID);
+    const aiChannelIds = (env.AI_CHANNEL_ID ?? "")
+      .split(",")
+      .map((id) => id.trim())
+      .filter(Boolean);
+    const isAiChannel = aiChannelIds.includes(message.channelId);
     const isMentioned =
       message.content.startsWith(botMention) || message.content.startsWith(botNickMention);
 

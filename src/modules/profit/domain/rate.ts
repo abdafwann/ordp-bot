@@ -3,14 +3,38 @@ import { CURRENCY_MULTIPLIER } from "./constants.js";
 import { InvalidRateError } from "./errors.js";
 
 const RATIO_REGEX = /^\s*(\d+)\s*\/\s*(\d+(?:\.\d+)?)\s*(wl|dl|bgl)?\s*$/i;
-const ABSOLUTE_REGEX = /^\s*(\d+(?:\.\d+)?)\s*(wl|dl|bgl)\s*$/i;
+const ABSOLUTE_REGEX = /^\s*(\d+(?:\.\d+)?)\s*(wl|dl|bgl)?\s*$/i;
 const FREE_REGEX = /^\s*free\s*$/i;
+
+export const MAX_RATE_ITEMS = 2147483647;
 
 function normalizeCurrency(raw?: string): Currency {
   if (!raw) return "WL";
   const upper = raw.toUpperCase();
   if (upper === "DL" || upper === "BGL") return upper;
   return "WL";
+}
+
+function assertValidItems(items: number): void {
+  if (!Number.isSafeInteger(items) || items < 1 || items > MAX_RATE_ITEMS) {
+    throw new InvalidRateError(
+      "Items count in rate must be a whole number greater than 0."
+    );
+  }
+}
+
+function assertValidAmount(wl: number): void {
+  if (!Number.isFinite(wl)) {
+    throw new InvalidRateError("Rate value is too large.");
+  }
+  if (wl === 0) {
+    throw new InvalidRateError(
+      "Currency amount cannot be zero. Use 'free' for zero-cost ingredients."
+    );
+  }
+  if (wl < 0) {
+    throw new InvalidRateError("Currency amount in rate cannot be negative.");
+  }
 }
 
 export function parseRate(input: string): ParsedRate {
@@ -29,17 +53,8 @@ export function parseRate(input: string): ParsedRate {
     const wl = parseFloat(ratioMatch[2]);
     const currency = normalizeCurrency(ratioMatch[3]);
 
-    if (items <= 0) {
-      throw new InvalidRateError("Items count in rate must be greater than 0.");
-    }
-    if (wl === 0) {
-      throw new InvalidRateError(
-        "Currency amount cannot be zero. Use 'free' for zero-cost ingredients."
-      );
-    }
-    if (wl < 0) {
-      throw new InvalidRateError("Currency amount in rate cannot be negative.");
-    }
+    assertValidItems(items);
+    assertValidAmount(wl);
 
     return {
       isFree: false,
@@ -52,14 +67,7 @@ export function parseRate(input: string): ParsedRate {
     const wl = parseFloat(absoluteMatch[1]);
     const currency = normalizeCurrency(absoluteMatch[2]);
 
-    if (wl === 0) {
-      throw new InvalidRateError(
-        "Currency amount cannot be zero. Use 'free' for zero-cost ingredients."
-      );
-    }
-    if (wl < 0) {
-      throw new InvalidRateError("Currency amount cannot be negative.");
-    }
+    assertValidAmount(wl);
 
     return {
       isFree: false,
@@ -68,7 +76,7 @@ export function parseRate(input: string): ParsedRate {
   }
 
   throw new InvalidRateError(
-    `Invalid rate format: "${input}". Use format like "200/150", "200/130 wl", "3dl", or "free".`
+    `Invalid rate format. Use a format like "200/150", "200/130 wl", "3dl", or "free".`
   );
 }
 
@@ -90,5 +98,10 @@ export function formatRate(parsed: ParsedRate): string {
 }
 
 export function formatWl(value: number, decimals = 2): string {
-  return value.toFixed(decimals);
+  const digits = Math.min(decimals, 3);
+  const rounded = Number(value.toFixed(digits));
+  if (rounded === 0 && value !== 0) {
+    return `${value < 0 ? "-" : ""}<${(1 / 10 ** digits).toFixed(digits)}`;
+  }
+  return Number.isInteger(rounded) ? rounded.toFixed(2) : String(rounded);
 }

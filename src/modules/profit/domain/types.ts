@@ -2,6 +2,11 @@ export type Currency = "WL" | "DL" | "BGL";
 export type HeatLevel = "Low" | "Medium" | "High";
 export type IngredientRequirement = "required" | "optional";
 
+export interface IngredientQuantityRange {
+  readonly min: number;
+  readonly max: number;
+}
+
 export interface Rate {
   readonly items: number;
   readonly wl: number;
@@ -17,6 +22,7 @@ export interface RecipeIngredient {
   readonly id: string;
   readonly name: string;
   readonly quantity: number;
+  readonly quantityRange?: IngredientQuantityRange;
   readonly timing: string;
   readonly requirement: IngredientRequirement;
   readonly notes?: string;

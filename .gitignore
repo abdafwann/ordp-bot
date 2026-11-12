@@ -5,3 +5,6 @@ dist/
 dev.db
 dev.db-journal
 .env
+docs/
+.superpowers/
+generated/

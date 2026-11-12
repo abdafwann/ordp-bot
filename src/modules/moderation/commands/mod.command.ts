@@ -4,9 +4,11 @@ import {
   PermissionFlagsBits,
   GuildMember,
   TextChannel,
+  MessageFlags,
 } from "discord.js";
 import { Command } from "../../../types/command.js";
 import { moderationService } from "../moderation.service.js";
+import { reportServerEvent } from "../../serverlogs/serverlogs.service.js";
 
 export const warnCommand: Command = {
   data: new SlashCommandBuilder()
@@ -26,7 +28,7 @@ export const warnCommand: Command = {
     const guildId = interaction.guildId || "dm";
 
     if (target.id === interaction.user.id) {
-      await interaction.reply({ content: "❌ You cannot warn yourself.", ephemeral: true });
+      await interaction.reply({ content: "❌ You cannot warn yourself.", flags: MessageFlags.Ephemeral });
       return;
     }
 
@@ -40,6 +42,8 @@ export const warnCommand: Command = {
       .setTimestamp();
 
     await interaction.reply({ embeds: [embed] });
+
+    void reportServerEvent(interaction.client, embed);
   },
 };
 
@@ -61,7 +65,7 @@ export const warningsCommand: Command = {
     if (warnings.length === 0) {
       await interaction.reply({
         content: `✅ <@${target.id}> has no recorded warnings.`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -112,7 +116,7 @@ export const timeoutCommand: Command = {
 
     const member = interaction.guild?.members.cache.get(targetUser.id);
     if (!member) {
-      await interaction.reply({ content: "❌ Member not found in this guild.", ephemeral: true });
+      await interaction.reply({ content: "❌ Member not found in this guild.", flags: MessageFlags.Ephemeral });
       return;
     }
 
@@ -121,11 +125,20 @@ export const timeoutCommand: Command = {
       await interaction.reply({
         content: `⏳ <@${targetUser.id}> has been timed out for **${minutes} minutes**. Reason: ${reason}`,
       });
+
+      const embed = new EmbedBuilder()
+        .setColor(0xe67e22)
+        .setTitle("⏳ Member Timed Out")
+        .setDescription(
+          `<@${targetUser.id}> timed out by <@${interaction.user.id}> for **${minutes} minutes**.\n**Reason:** ${reason}`
+        )
+        .setTimestamp();
+      void reportServerEvent(interaction.client, embed);
     } catch (err) {
       console.error(err);
       await interaction.reply({
         content: "❌ Failed to timeout member. Ensure the bot has higher role permissions.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   },
@@ -149,7 +162,7 @@ export const kickCommand: Command = {
 
     const member = interaction.guild?.members.cache.get(targetUser.id);
     if (!member) {
-      await interaction.reply({ content: "❌ Member not found in this guild.", ephemeral: true });
+      await interaction.reply({ content: "❌ Member not found in this guild.", flags: MessageFlags.Ephemeral });
       return;
     }
 
@@ -158,11 +171,20 @@ export const kickCommand: Command = {
       await interaction.reply({
         content: `👢 Successfully kicked <@${targetUser.id}>. Reason: ${reason}`,
       });
+
+      const embed = new EmbedBuilder()
+        .setColor(0xe67e22)
+        .setTitle("👢 Member Kicked")
+        .setDescription(
+          `<@${targetUser.id}> kicked by <@${interaction.user.id}>.\n**Reason:** ${reason}`
+        )
+        .setTimestamp();
+      void reportServerEvent(interaction.client, embed);
     } catch (err) {
       console.error(err);
       await interaction.reply({
         content: "❌ Failed to kick member. Ensure the bot has higher role permissions.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   },
@@ -189,11 +211,20 @@ export const banCommand: Command = {
       await interaction.reply({
         content: `🔨 Successfully banned <@${targetUser.id}>. Reason: ${reason}`,
       });
+
+      const embed = new EmbedBuilder()
+        .setColor(0xe67e22)
+        .setTitle("🔨 Member Banned")
+        .setDescription(
+          `<@${targetUser.id}> banned by <@${interaction.user.id}>.\n**Reason:** ${reason}`
+        )
+        .setTimestamp();
+      void reportServerEvent(interaction.client, embed);
     } catch (err) {
       console.error(err);
       await interaction.reply({
         content: "❌ Failed to ban user. Ensure the bot has higher role permissions.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   },
@@ -220,7 +251,7 @@ export const clearCommand: Command = {
     if (!channel || !channel.isTextBased() || !("bulkDelete" in channel)) {
       await interaction.reply({
         content: "❌ Cannot bulk delete messages in this channel type.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -229,13 +260,13 @@ export const clearCommand: Command = {
       const deleted = await (channel as TextChannel).bulkDelete(amount, true);
       await interaction.reply({
         content: `🧹 Successfully deleted **${deleted.size}** messages.`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     } catch (err) {
       console.error(err);
       await interaction.reply({
         content: "❌ Failed to delete messages (messages older than 14 days cannot be bulk deleted).",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   },

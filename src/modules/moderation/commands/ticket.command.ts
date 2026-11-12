@@ -10,6 +10,7 @@ import {
   Guild,
   User,
   TextChannel,
+  MessageFlags,
 } from "discord.js";
 import { Command } from "../../../types/command.js";
 import { ticketService } from "../ticket.service.js";
@@ -37,7 +38,7 @@ export const ticketSetupCommand: Command = {
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
 
-    await interaction.reply({ content: "✅ Ticket panel sent!", ephemeral: true });
+    await interaction.reply({ content: "✅ Ticket panel sent!", flags: MessageFlags.Ephemeral });
     if (interaction.channel && interaction.channel.isTextBased()) {
       await (interaction.channel as TextChannel).send({
         embeds: [embed],
@@ -59,7 +60,7 @@ export async function handleTicketInteraction(interaction: ButtonInteraction) {
     if (existing) {
       await interaction.reply({
         content: `❌ You already have an open ticket: <#${existing.id}>`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -118,13 +119,13 @@ export async function handleTicketInteraction(interaction: ButtonInteraction) {
 
       await interaction.reply({
         content: `✅ Your ticket has been created: <#${ticketChannel.id}>`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     } catch (err) {
       console.error("[Ticket Creation Error]", err);
       await interaction.reply({
         content: "❌ Failed to create ticket channel. Ensure bot has 'Manage Channels' permission.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   } else if (customId === "close_ticket") {

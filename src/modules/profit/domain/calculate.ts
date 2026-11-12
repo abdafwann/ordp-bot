@@ -1,7 +1,11 @@
 import { CookingRecipe, IngredientCostBreakdown, ParsedRate, ProfitResult } from "./types.js";
 import { pricePerItemWl } from "./rate.js";
 import { OverrideAction } from "./overrides.js";
-import { MissingPricesError } from "./errors.js";
+import { MissingPricesError, CalculationOverflowError } from "./errors.js";
+import {
+  resolveIngredientQuantity,
+  validateBatchQuantity,
+} from "./quantity.js";
 
 export interface CalculateProfitParams {
   recipe: CookingRecipe;
@@ -10,6 +14,14 @@ export interface CalculateProfitParams {
   overrides?: Map<string, OverrideAction>;
   sellRate?: ParsedRate | null;
   quantity?: number;
+  rangeChoices?: ReadonlyMap<string, number>;
+}
+
+function assertFinite(value: number): number {
+  if (!Number.isFinite(value)) {
+    throw new CalculationOverflowError();
+  }
+  return value;
 }
 
 export function calculateProfit(params: CalculateProfitParams): ProfitResult {
@@ -20,7 +32,10 @@ export function calculateProfit(params: CalculateProfitParams): ProfitResult {
     overrides = new Map(),
     sellRate = null,
     quantity = 1,
+    rangeChoices,
   } = params;
+
+  validateBatchQuantity(quantity);
 
   const missingPrices: string[] = [];
   const breakdown: IngredientCostBreakdown[] = [];
@@ -55,14 +70,15 @@ export function calculateProfit(params: CalculateProfitParams): ProfitResult {
       effectiveRate = dbPrice;
     }
 
-    const unitCostWl = pricePerItemWl(effectiveRate);
-    const totalCostWl = unitCostWl * ingredient.quantity;
-    modalPerMasakanWl += totalCostWl;
+    const resolvedQuantity = resolveIngredientQuantity(ingredient, rangeChoices);
+    const unitCostWl = assertFinite(pricePerItemWl(effectiveRate));
+    const totalCostWl = assertFinite(unitCostWl * resolvedQuantity);
+    modalPerMasakanWl = assertFinite(modalPerMasakanWl + totalCostWl);
 
     breakdown.push({
       id: ingredient.id,
       name: ingredient.name,
-      quantity: ingredient.quantity,
+      quantity: resolvedQuantity,
       requirement: ingredient.requirement,
       isFree: effectiveRate.isFree,
       rate: effectiveRate.rate,
@@ -75,24 +91,31 @@ export function calculateProfit(params: CalculateProfitParams): ProfitResult {
     throw new MissingPricesError(missingPrices);
   }
 
-  const batchQty = Math.max(1, quantity);
-  const totalModalWl = modalPerMasakanWl * batchQty;
+  const totalModalWl = assertFinite(modalPerMasakanWl * quantity);
 
-  const sellPricePerMasakanWl = sellRate ? pricePerItemWl(sellRate) : null;
-  const totalRevenueWl = sellPricePerMasakanWl !== null ? sellPricePerMasakanWl * batchQty : null;
+  const sellPricePerMasakanWl = sellRate ? assertFinite(pricePerItemWl(sellRate)) : null;
+  const totalRevenueWl =
+    sellPricePerMasakanWl !== null
+      ? assertFinite(sellPricePerMasakanWl * quantity)
+      : null;
 
   const profitPerMasakanWl =
-    sellPricePerMasakanWl !== null ? sellPricePerMasakanWl - modalPerMasakanWl : null;
-  const totalProfitWl = profitPerMasakanWl !== null ? profitPerMasakanWl * batchQty : null;
+    sellPricePerMasakanWl !== null
+      ? assertFinite(sellPricePerMasakanWl - modalPerMasakanWl)
+      : null;
+  const totalProfitWl =
+    profitPerMasakanWl !== null
+      ? assertFinite(profitPerMasakanWl * quantity)
+      : null;
 
   let marginPercent: number | null = null;
   if (profitPerMasakanWl !== null && sellPricePerMasakanWl !== null && sellPricePerMasakanWl > 0) {
-    marginPercent = (profitPerMasakanWl / sellPricePerMasakanWl) * 100;
+    marginPercent = assertFinite((profitPerMasakanWl / sellPricePerMasakanWl) * 100);
   }
 
   let roiPercent: number | null = null;
   if (profitPerMasakanWl !== null && modalPerMasakanWl > 0) {
-    roiPercent = (profitPerMasakanWl / modalPerMasakanWl) * 100;
+    roiPercent = assertFinite((profitPerMasakanWl / modalPerMasakanWl) * 100);
   }
 
   return {

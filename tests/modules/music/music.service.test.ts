@@ -1,9 +1,60 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { EventEmitter } from "node:events";
 import { MusicService } from "../../../src/modules/music/music.service.js";
 import type { VoiceBasedChannel, TextBasedChannel } from "discord.js";
 import { YouTube } from "youtube-sr";
 import youtubedl from "yt-dlp-exec";
 import * as voice from "@discordjs/voice";
+
+const { mockExec, mockCreate } = vi.hoisted(() => {
+  const exec = vi.fn();
+  const create = vi.fn((_binaryPath?: string) => ({
+    exec,
+  }));
+  return { mockExec: exec, mockCreate: create };
+});
+
+function createMockChildProcess(options: {
+  failType?: "ENOENT" | "nonzero";
+  streamData?: boolean;
+} = {}) {
+  const proc = new EventEmitter() as any;
+  proc.stdout = new EventEmitter();
+  proc.stdout.pipe = vi.fn();
+  proc.stderr = new EventEmitter();
+  proc.kill = vi.fn((signal?: string) => {
+    proc.killed = true;
+    proc.signal = signal;
+    proc.emit("close", null, signal || "SIGKILL");
+    return true;
+  });
+
+  const promise = new Promise<any>((_resolve, reject) => {
+    queueMicrotask(() => {
+      if (options.failType === "ENOENT") {
+        const err = Object.assign(new Error("spawn yt-dlp ENOENT"), { code: "ENOENT" });
+        proc.emit("error", err);
+        reject(err);
+      } else if (options.failType === "nonzero") {
+        const err = Object.assign(new Error("Command failed with exit code 1"), { exitCode: 1 });
+        proc.emit("spawn");
+        queueMicrotask(() => {
+          proc.emit("close", 1);
+          reject(err);
+        });
+      } else {
+        proc.emit("spawn");
+        if (options.streamData !== false) {
+          proc.stdout.emit("data", Buffer.from("audio"));
+        }
+      }
+    });
+  });
+
+  proc.then = promise.then.bind(promise);
+  proc.catch = promise.catch.bind(promise);
+  return proc;
+}
 
 vi.mock("youtube-sr", () => ({
   YouTube: {
@@ -19,14 +70,12 @@ vi.mock("youtube-sr", () => ({
 }));
 
 vi.mock("yt-dlp-exec", () => {
-  const execFn = vi.fn(() => ({
-    stdout: { pipe: vi.fn(), on: vi.fn() },
-    stderr: { on: vi.fn() },
-  }));
   return {
-    exec: execFn,
+    create: (...args: any[]) => mockCreate(...args),
+    exec: (...args: any[]) => mockExec(...args),
     default: {
-      exec: execFn,
+      create: (...args: any[]) => mockCreate(...args),
+      exec: (...args: any[]) => mockExec(...args),
     },
   };
 });
@@ -115,6 +164,8 @@ describe("MusicService", () => {
       id: "tc-123",
       send: vi.fn().mockResolvedValue({}),
     } as unknown as TextBasedChannel;
+
+    mockExec.mockImplementation(() => createMockChildProcess());
 
     service = new MusicService();
   });
@@ -290,9 +341,9 @@ describe("MusicService", () => {
         selfMute: false,
       });
       expect(mockConnection.subscribe).toHaveBeenCalledWith(mockPlayer);
-      expect(youtubedl.exec).toHaveBeenCalledWith(track1.url, expect.any(Object));
+      expect(mockExec).toHaveBeenCalledWith(track1.url, expect.any(Object));
       expect(mockPlayer.play).toHaveBeenCalled();
-      expect(mockTextChannel.send).toHaveBeenCalled();
+      expect((mockTextChannel as any).send).toHaveBeenCalled();
     });
 
     it("should append subsequent track to queue with correct position", async () => {
@@ -324,7 +375,7 @@ describe("MusicService", () => {
       const queue = service.getQueue("guild-123");
       expect(queue?.currentTrack).toEqual(track2);
       expect(queue?.tracks).toHaveLength(0);
-      expect(youtubedl.exec).toHaveBeenCalledWith(track2.url, expect.any(Object));
+      expect(mockExec).toHaveBeenCalledWith(track2.url, expect.any(Object));
     });
 
     it("should start 5-minute idle timeout when last track finishes", async () => {
@@ -476,6 +527,121 @@ describe("MusicService", () => {
 
       connectionListeners["disconnected"]?.();
       expect(service.getQueue("guild-123")).toBeUndefined();
+    });
+  });
+
+  describe("playback failures, process lifecycle, and downloader binding", () => {
+    const track1 = {
+      title: "Song 1",
+      url: "https://youtube.com/watch?v=1",
+      duration: "03:00",
+      durationInSec: 180,
+      requestedBy: "Alice",
+      requestedById: "111",
+    };
+
+    const track2 = {
+      title: "Song 2",
+      url: "https://youtube.com/watch?v=2",
+      duration: "04:00",
+      durationInSec: 240,
+      requestedBy: "Bob",
+      requestedById: "222",
+    };
+
+    it("should bind yt-dlp-exec via create() using system downloader path or config", () => {
+      new MusicService();
+      expect(mockCreate).toHaveBeenCalledWith(process.env.YT_DLP_PATH || "/usr/bin/yt-dlp");
+    });
+
+    it("should handle spawn ENOENT without false now-playing embed and advance queue once", async () => {
+      mockExec
+        .mockImplementationOnce(() => createMockChildProcess({ failType: "ENOENT" }))
+        .mockImplementationOnce(() => createMockChildProcess());
+
+      await service.enqueue("guild-123", mockVoiceChannel, mockTextChannel, track1);
+      await service.enqueue("guild-123", mockVoiceChannel, mockTextChannel, track2);
+
+      for (let i = 0; i < 10; i++) {
+        await Promise.resolve();
+      }
+
+      expect((mockTextChannel as any).send).toHaveBeenCalledWith(
+        expect.objectContaining({
+          content: expect.stringContaining("Audio downloader is not available"),
+        })
+      );
+
+      const queue = service.getQueue("guild-123");
+      expect(queue?.currentTrack).toEqual(track2);
+    });
+
+    it("should handle nonzero child exit without false now-playing embed and advance queue once", async () => {
+      mockExec
+        .mockImplementationOnce(() => createMockChildProcess({ failType: "nonzero" }))
+        .mockImplementationOnce(() => createMockChildProcess());
+
+      await service.enqueue("guild-123", mockVoiceChannel, mockTextChannel, track1);
+      await service.enqueue("guild-123", mockVoiceChannel, mockTextChannel, track2);
+
+      for (let i = 0; i < 10; i++) {
+        await Promise.resolve();
+      }
+
+      expect((mockTextChannel as any).send).toHaveBeenCalledWith(
+        expect.objectContaining({
+          content: expect.stringContaining("Could not stream audio"),
+        })
+      );
+
+      const queue = service.getQueue("guild-123");
+      expect(queue?.currentTrack).toEqual(track2);
+    });
+
+    it("should clean up child process on skip and ignore stale async failures without duplicate advance", async () => {
+      let child1: any;
+      mockExec
+        .mockImplementationOnce(() => {
+          child1 = createMockChildProcess();
+          return child1;
+        })
+        .mockImplementationOnce(() => createMockChildProcess());
+
+      await service.enqueue("guild-123", mockVoiceChannel, mockTextChannel, track1);
+      await service.enqueue("guild-123", mockVoiceChannel, mockTextChannel, track2);
+
+      service.skip("guild-123");
+      expect(child1.kill).toHaveBeenCalled();
+
+      child1.emit("error", new Error("Command was killed"));
+
+      playerListeners["idle"]?.();
+      for (let i = 0; i < 10; i++) {
+        await Promise.resolve();
+      }
+
+      const queue = service.getQueue("guild-123");
+      expect(queue?.currentTrack).toEqual(track2);
+      expect(mockExec).toHaveBeenCalledTimes(2);
+    });
+
+    it("should advance queue once even when player error and idle race occur", async () => {
+      mockExec
+        .mockImplementationOnce(() => createMockChildProcess())
+        .mockImplementationOnce(() => createMockChildProcess());
+
+      await service.enqueue("guild-123", mockVoiceChannel, mockTextChannel, track1);
+      await service.enqueue("guild-123", mockVoiceChannel, mockTextChannel, track2);
+
+      playerListeners["error"]?.(new Error("Audio packet decode failed"));
+      playerListeners["idle"]?.();
+      for (let i = 0; i < 10; i++) {
+        await Promise.resolve();
+      }
+
+      const queue = service.getQueue("guild-123");
+      expect(queue?.currentTrack).toEqual(track2);
+      expect(mockExec).toHaveBeenCalledTimes(2);
     });
   });
 });

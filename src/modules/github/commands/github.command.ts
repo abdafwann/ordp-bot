@@ -4,6 +4,7 @@ import {
   ChannelType,
   PermissionFlagsBits,
   ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 import { Command } from "../../../types/command.js";
 import { prisma } from "../../../core/db.js";
@@ -44,7 +45,7 @@ export const githubCommand: Command = {
     if (!isOwner && !isAdmin) {
       await interaction.reply({
         content: "❌ You do not have permission to use GitHub configuration commands.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -53,7 +54,7 @@ export const githubCommand: Command = {
 
     if (subcommand === "set-channel") {
       if (!interaction.guildId) {
-        await interaction.reply({ content: "❌ This command must be run in a server.", ephemeral: true });
+        await interaction.reply({ content: "❌ This command must be run in a server.", flags: MessageFlags.Ephemeral });
         return;
       }
 
@@ -70,7 +71,7 @@ export const githubCommand: Command = {
 
       await interaction.reply({
         content: `✅ GitHub webhook notifications will now be routed to <#${channel.id}>.`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -107,7 +108,7 @@ export const githubCommand: Command = {
         .setFooter({ text: "Add webhook URL to your GitHub Repo: Settings > Webhooks" })
         .setTimestamp();
 
-      await interaction.reply({ embeds: [embed], ephemeral: true });
+      await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
       return;
     }
 
@@ -140,7 +141,7 @@ export const githubCommand: Command = {
       await interaction.reply({
         content: "🚀 Sent sample GitHub push notification:",
         embeds: [testEmbed],
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   },

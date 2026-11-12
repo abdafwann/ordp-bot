@@ -4,6 +4,7 @@ import {
   PermissionFlagsBits,
   ChatInputCommandInteraction,
   ColorResolvable,
+  MessageFlags,
 } from "discord.js";
 import { Command } from "../../../types/command.js";
 
@@ -55,7 +56,7 @@ export const embedCommand: Command = {
       embed.setFooter({ text: footerText });
     }
 
-    await interaction.reply({ content: "✅ Embed sent!", ephemeral: true });
+    await interaction.reply({ content: "✅ Embed sent!", flags: MessageFlags.Ephemeral });
     if (interaction.channel && "send" in interaction.channel) {
       await interaction.channel.send({ embeds: [embed] });
     }

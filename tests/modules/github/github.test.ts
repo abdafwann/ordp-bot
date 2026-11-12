@@ -5,7 +5,9 @@ import {
   formatPushEvent,
   formatPullRequestEvent,
   formatIssuesEvent,
+  formatWorkflowRunEvent,
 } from "../../../src/modules/github/github.formatter.js";
+import { resolveRepoChannelId } from "../../../src/modules/github/github.router.js";
 
 describe("GitHub Webhook & Signature Verification", () => {
   const secret = "super-secret-webhook-key";
@@ -121,5 +123,114 @@ describe("GitHub Event Embed Formatter", () => {
     const embed = formatIssuesEvent(issuePayload);
     expect(embed.data.title).toContain("Issue #15 opened");
     expect(embed.data.description).toContain("Bug: command timeout");
+  });
+
+  it("should format workflow_run success with green color", () => {
+    const embed = formatWorkflowRunEvent({
+      action: "completed",
+      repository: {
+        full_name: "owner/ordp-bot",
+        html_url: "https://github.com/owner/ordp-bot",
+      },
+      workflow_run: {
+        id: 1,
+        name: "CI",
+        head_branch: "main",
+        head_sha: "a1b2c3d4e5f67890",
+        status: "completed",
+        conclusion: "success",
+        html_url: "https://github.com/owner/ordp-bot/actions/runs/1",
+        display_title: "feat: add webhook support",
+      },
+      sender: { login: "developer", avatar_url: "https://avatars.githubusercontent.com/u/123" },
+    });
+
+    expect(embed.data.title).toContain("✅");
+    expect(embed.data.title).toContain("completed / success");
+    expect(embed.data.title).toContain("CI");
+    expect(embed.data.color).toBe(0x238636);
+    expect(embed.data.description).toContain("`a1b2c3d`");
+  });
+
+  it("should format workflow_run failure with red color", () => {
+    const embed = formatWorkflowRunEvent({
+      action: "completed",
+      repository: {
+        full_name: "owner/ordp-bot",
+        html_url: "https://github.com/owner/ordp-bot",
+      },
+      workflow_run: {
+        id: 2,
+        name: "CI",
+        head_branch: "main",
+        head_sha: "a1b2c3d4e5f67890",
+        status: "completed",
+        conclusion: "failure",
+        html_url: "https://github.com/owner/ordp-bot/actions/runs/2",
+        display_title: "fix: ci",
+      },
+      sender: { login: "developer", avatar_url: "https://avatars.githubusercontent.com/u/123" },
+    });
+
+    expect(embed.data.title).toContain("❌");
+    expect(embed.data.color).toBe(0xda3633);
+  });
+
+  it("should format in-progress workflow_run with yellow color", () => {
+    const embed = formatWorkflowRunEvent({
+      action: "in_progress",
+      repository: {
+        full_name: "owner/ordp-bot",
+        html_url: "https://github.com/owner/ordp-bot",
+      },
+      workflow_run: {
+        id: 3,
+        name: "CI",
+        head_branch: "feature/x",
+        head_sha: "a1b2c3d4e5f67890",
+        status: "in_progress",
+        conclusion: null,
+        html_url: "https://github.com/owner/ordp-bot/actions/runs/3",
+        display_title: "feat: wip",
+      },
+      sender: { login: "developer", avatar_url: "https://avatars.githubusercontent.com/u/123" },
+    });
+
+    expect(embed.data.title).toContain("🟡");
+    expect(embed.data.title).toContain("in_progress");
+    expect(embed.data.color).toBe(0xdbab0a);
+  });
+});
+
+describe("Repo Channel Routing", () => {
+  const mapping = new Map<string, string>([
+    ["owner/ordp-bot", "111111111111111111"],
+    ["owner/website", "222222222222222222"],
+  ]);
+
+  it("should resolve a registered repo to its channel (case-insensitive)", () => {
+    expect(resolveRepoChannelId("Owner/OrdP-Bot", mapping, "999999999999999999")).toBe(
+      "111111111111111111"
+    );
+  });
+
+  it("should resolve an unregistered repo to the fallback channel", () => {
+    expect(resolveRepoChannelId("owner/unknown", mapping, "999999999999999999")).toBe(
+      "999999999999999999"
+    );
+  });
+
+  it("should return null for unregistered repo without fallback", () => {
+    expect(resolveRepoChannelId("owner/unknown", mapping, undefined)).toBeNull();
+  });
+
+  it("should return null when repo name is missing and no fallback", () => {
+    expect(resolveRepoChannelId(undefined, mapping, undefined)).toBeNull();
+  });
+
+  it("should return fallback when repo name is missing but fallback exists", () => {
+    expect(resolveRepoChannelId(undefined, mapping, "999999999999999999")).toBe(
+      "999999999999999999"
+    );
   });
 });

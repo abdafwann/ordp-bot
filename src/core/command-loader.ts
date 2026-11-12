@@ -30,9 +30,11 @@ import {
 } from "../modules/moderation/commands/mod.command.js";
 import { ticketSetupCommand } from "../modules/moderation/commands/ticket.command.js";
 import { automodCommand } from "../modules/moderation/commands/automod.command.js";
+import { roleCommand } from "../modules/moderation/commands/role.command.js";
 
 // GitHub Commands
 import { githubCommand } from "../modules/github/commands/github.command.js";
+import { repoCommand } from "../modules/github/commands/repo.command.js";
 
 // Music Commands
 import { playCommand } from "../modules/music/commands/play.command.js";
@@ -73,7 +75,9 @@ export const allCommands: Command[] = [
   clearCommand,
   ticketSetupCommand,
   automodCommand,
+  roleCommand,
   githubCommand,
+  repoCommand,
   playCommand,
   skipCommand,
   pauseCommand,

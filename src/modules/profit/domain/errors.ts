@@ -20,3 +20,24 @@ export class MissingPricesError extends DomainError {
 }
 
 export class InvalidOverrideError extends DomainError {}
+
+export class InvalidQuantityError extends DomainError {}
+
+export class MissingQuantityChoiceError extends DomainError {
+  constructor(
+    ingredientName: string,
+    range: { readonly min: number; readonly max: number }
+  ) {
+    super(
+      `Choose a quantity for ${ingredientName} (${range.min}-${range.max}) before calculating.`
+    );
+  }
+}
+
+export class CalculationOverflowError extends DomainError {
+  constructor() {
+    super(
+      "A calculated value is too large to handle. Reduce the batch quantity or use smaller rates."
+    );
+  }
+}

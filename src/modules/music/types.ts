@@ -28,4 +28,7 @@ export interface GuildQueue {
   isPaused: boolean;
   idleTimeout: NodeJS.Timeout | null;
   disconnectTimeout: NodeJS.Timeout | null;
+  currentProcess?: any;
+  currentSessionId?: number;
+  advancedSessionId?: number;
 }

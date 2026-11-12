@@ -6,6 +6,7 @@ import {
   ButtonStyle,
   ButtonInteraction,
   ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 import { Command } from "../../../types/command.js";
 import { utilityService, PollResult } from "../utility.service.js";
@@ -71,7 +72,7 @@ export const pollCommand: Command = {
 
   async execute(interaction: ChatInputCommandInteraction) {
     if (!interaction.guildId) {
-      await interaction.reply({ content: "❌ Polls can only be run in a server.", ephemeral: true });
+      await interaction.reply({ content: "❌ Polls can only be run in a server.", flags: MessageFlags.Ephemeral });
       return;
     }
 
@@ -122,7 +123,7 @@ export async function handlePollInteraction(interaction: ButtonInteraction) {
   );
 
   if (!voteResult) {
-    await interaction.reply({ content: "❌ This poll is no longer active.", ephemeral: true });
+    await interaction.reply({ content: "❌ This poll is no longer active.", flags: MessageFlags.Ephemeral });
     return;
   }
 

@@ -68,6 +68,28 @@ export interface GitHubIssuePayload {
   };
 }
 
+export interface GitHubWorkflowRunPayload {
+  action: string;
+  repository: {
+    full_name: string;
+    html_url: string;
+  };
+  workflow_run: {
+    id: number;
+    name: string;
+    head_branch: string;
+    head_sha: string;
+    status: string;
+    conclusion: string | null;
+    html_url: string;
+    display_title: string;
+  };
+  sender: {
+    login: string;
+    avatar_url: string;
+  };
+}
+
 export function formatPushEvent(payload: GitHubPushPayload): EmbedBuilder {
   const branch = payload.ref.replace("refs/heads/", "");
   const commitCount = payload.commits.length;
@@ -133,6 +155,49 @@ export function formatIssuesEvent(payload: GitHubIssuePayload): EmbedBuilder {
       iconURL: issue.user.avatar_url,
     })
     .setDescription(`**Title:** ${issue.title}\n[View Issue](${issue.html_url})`)
+    .setTimestamp();
+
+  return embed;
+}
+
+export function formatWorkflowRunEvent(payload: GitHubWorkflowRunPayload): EmbedBuilder {
+  const run = payload.workflow_run;
+  const status = run.status;
+  const conclusion = run.conclusion;
+
+  let color = 0xdbab0a; // yellow: in progress / queued
+  let emoji = "🟡";
+
+  if (status === "completed") {
+    if (conclusion === "success") {
+      color = 0x238636;
+      emoji = "✅";
+    } else if (conclusion === "failure") {
+      color = 0xda3633;
+      emoji = "❌";
+    } else if (conclusion === "cancelled") {
+      color = 0x8b949e;
+      emoji = "⚪";
+    } else {
+      color = 0xdbab0a;
+      emoji = "⚠️";
+    }
+  }
+
+  const shortSha = run.head_sha.substring(0, 7);
+  const state = conclusion ? `${status} / ${conclusion}` : status;
+
+  const embed = new EmbedBuilder()
+    .setColor(color)
+    .setTitle(`${emoji} [${payload.repository.full_name}] Workflow ${state}: ${run.name}`)
+    .setURL(run.html_url)
+    .setAuthor({
+      name: payload.sender.login,
+      iconURL: payload.sender.avatar_url,
+    })
+    .setDescription(
+      `**Run:** ${run.display_title || run.name}\n**Branch:** ${run.head_branch} (\`${shortSha}\`)`
+    )
     .setTimestamp();
 
   return embed;

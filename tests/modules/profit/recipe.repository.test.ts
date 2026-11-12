@@ -4,7 +4,7 @@ import { recipeRepository } from "../../../src/modules/profit/data/recipe.reposi
 describe("Recipe Repository", () => {
   it("should load recipes from seeded json", () => {
     const all = recipeRepository.getAll();
-    expect(all.length).toBeGreaterThanOrEqual(5);
+    expect(all.length).toBeGreaterThanOrEqual(40);
   });
 
   it("should find recipe by exact id or case-insensitive name", () => {
@@ -12,20 +12,20 @@ describe("Recipe Repository", () => {
     expect(r1).not.toBeNull();
     expect(r1?.id).toBe("berry_crepes");
 
-    const r2 = recipeRepository.findByName("pizza");
+    const r2 = recipeRepository.findByName("apple strudel");
     expect(r2).not.toBeNull();
-    expect(r2?.name).toBe("Pizza");
+    expect(r2?.name).toBe("Apple Strudel");
   });
 
   it("should search recipes by substring for autocomplete", () => {
-    const matches = recipeRepository.search("piz");
+    const matches = recipeRepository.search("apple");
     expect(matches.length).toBeGreaterThanOrEqual(1);
-    expect(matches[0].name).toBe("Pizza");
+    expect(matches[0].name).toBe("Apple Strudel");
   });
 
   it("should collect all unique ingredient names", () => {
     const names = recipeRepository.getAllIngredientNames();
     expect(names).toContain("Dough");
-    expect(names).toContain("Cheese");
+    expect(names).toContain("Flour");
   });
 });

@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction, MessageFlags } from "discord.js";
 import { Command } from "../../../types/command.js";
 import { utilityService } from "../utility.service.js";
 
@@ -27,7 +27,7 @@ export const remindCommand: Command = {
     if (!durationMs || durationMs <= 0) {
       await interaction.reply({
         content: "❌ Invalid time format. Please use formats like `30s`, `15m`, `2h`, or `1d`.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -45,7 +45,7 @@ export const remindCommand: Command = {
 
     await interaction.reply({
       content: `⏰ Reminder set! I will remind you <t:${targetTimestamp}:R> for: **${message}**.`,
-      ephemeral: true,
+      flags: MessageFlags.Ephemeral,
     });
   },
 };

@@ -11,6 +11,72 @@ import {
 } from "../modules/github/github.formatter.js";
 import { resolveRepoChannelId } from "../modules/github/github.router.js";
 
+const MAX_BODY_BYTES = 1024 * 1024;
+
+export class PayloadTooLargeError extends Error {
+  constructor() {
+    super("Payload too large");
+    this.name = "PayloadTooLargeError";
+  }
+}
+
+export function readBoundedBody(
+  req: IncomingMessage,
+  limit: number
+): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    let received = 0;
+    let settled = false;
+    const chunks: Buffer[] = [];
+
+    const settle = (complete: () => void) => {
+      if (settled) return;
+      settled = true;
+      req.off("data", onData);
+      req.off("end", onEnd);
+      req.off("error", onError);
+      req.off("aborted", onAborted);
+      chunks.length = 0;
+      complete();
+    };
+
+    function onData(chunk: Buffer) {
+      received += chunk.length;
+      if (received > limit) {
+        settle(() => reject(new PayloadTooLargeError()));
+        return;
+      }
+      chunks.push(chunk);
+    }
+
+    function onEnd() {
+      const body = Buffer.concat(chunks);
+      settle(() => resolve(body));
+    }
+
+    function onError(err: Error) {
+      settle(() => reject(err));
+    }
+
+    function onAborted() {
+      settle(() =>
+        reject(new Error("Request aborted before the body completed"))
+      );
+    }
+
+    const declaredLength = Number(req.headers["content-length"]);
+    if (Number.isFinite(declaredLength) && declaredLength > limit) {
+      settle(() => reject(new PayloadTooLargeError()));
+      return;
+    }
+
+    req.on("data", onData);
+    req.on("end", onEnd);
+    req.on("error", onError);
+    req.on("aborted", onAborted);
+  });
+}
+
 export function createWebhookServer(client: Client) {
   const server = http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
     // Health check endpoint
@@ -28,32 +94,49 @@ export function createWebhookServer(client: Client) {
 
     // GitHub webhook endpoint
     if (req.method === "POST" && req.url === "/api/webhooks/github") {
-      const chunks: Uint8Array[] = [];
+      const secret = env.GITHUB_WEBHOOK_SECRET;
+      if (!secret || secret.trim().length === 0) {
+        res.writeHead(503, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({ error: "GitHub webhook secret not configured" })
+        );
+        return;
+      }
 
-      req.on("data", (chunk) => {
-        chunks.push(chunk);
-      });
+      let responded = false;
+      const respond = (
+        status: number,
+        body: string,
+        closeConnection = false
+      ) => {
+        if (responded || res.writableEnded || res.destroyed) return;
+        responded = true;
+        res.writeHead(status, {
+          "Content-Type": "application/json",
+          ...(closeConnection ? { Connection: "close" } : {}),
+        });
+        res.end(body, () => {
+          if (closeConnection) {
+            res.socket?.destroy();
+          }
+        });
+      };
 
-      req.on("end", async () => {
-        const rawBody = Buffer.concat(chunks).toString("utf-8");
-        const signature = req.headers["x-hub-signature-256"] as string | undefined;
+      try {
+        const rawBody = await readBoundedBody(req, MAX_BODY_BYTES);
+
+        const signature = req.headers["x-hub-signature-256"] as
+          | string
+          | undefined;
         const githubEvent = req.headers["x-github-event"] as string | undefined;
 
-        if (env.GITHUB_WEBHOOK_SECRET) {
-          const isValid = verifyGitHubSignature(
-            rawBody,
-            signature,
-            env.GITHUB_WEBHOOK_SECRET
-          );
-          if (!isValid) {
-            res.writeHead(401, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Invalid signature" }));
-            return;
-          }
+        if (!verifyGitHubSignature(rawBody, signature, secret)) {
+          respond(401, JSON.stringify({ error: "Invalid signature" }));
+          return;
         }
 
         try {
-          const payload = JSON.parse(rawBody);
+          const payload = JSON.parse(rawBody.toString("utf-8"));
           let embed;
 
           if (githubEvent === "push") {
@@ -67,8 +150,9 @@ export function createWebhookServer(client: Client) {
           }
 
           if (embed) {
-            const repoFullName = (payload as { repository?: { full_name?: string } })
-              .repository?.full_name;
+            const repoFullName = (
+              payload as { repository?: { full_name?: string } }
+            ).repository?.full_name;
 
             const mappings = await prisma.repoChannel.findMany();
             const mapping = new Map(
@@ -82,13 +166,22 @@ export function createWebhookServer(client: Client) {
             );
 
             if (targetId) {
-              const channel = await client.channels.fetch(targetId).catch(() => null);
+              const channel = await client.channels
+                .fetch(targetId)
+                .catch(() => null);
               if (channel && channel.isTextBased()) {
-                await (channel as TextChannel).send({ embeds: [embed] }).catch((err) => {
-                  console.error(`Failed to send GitHub embed to channel ${targetId}:`, err);
-                });
+                await (channel as TextChannel)
+                  .send({ embeds: [embed] })
+                  .catch((err) => {
+                    console.error(
+                      `Failed to send GitHub embed to channel ${targetId}:`,
+                      err
+                    );
+                  });
               } else {
-                console.error(`[GitHub Webhook] Target channel ${targetId} is not text-based.`);
+                console.error(
+                  `[GitHub Webhook] Target channel ${targetId} is not text-based.`
+                );
               }
             } else {
               console.warn(
@@ -97,14 +190,23 @@ export function createWebhookServer(client: Client) {
             }
           }
 
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: true, event: githubEvent }));
+          respond(200, JSON.stringify({ success: true, event: githubEvent }));
         } catch (err) {
           console.error("[GitHub Webhook Server Error]", err);
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Bad request" }));
+          respond(400, JSON.stringify({ error: "Bad request" }));
         }
-      });
+      } catch (err) {
+        if (err instanceof PayloadTooLargeError) {
+          respond(413, JSON.stringify({ error: "Payload too large" }), true);
+          return;
+        }
+        if (req.destroyed || res.destroyed) {
+          console.warn("[GitHub Webhook] Request aborted mid-body.");
+          return;
+        }
+        console.error("[GitHub Webhook Server Error]", err);
+        respond(400, JSON.stringify({ error: "Bad request" }));
+      }
       return;
     }
 

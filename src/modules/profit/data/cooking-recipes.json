@@ -1,151 +1,2211 @@
 [
   {
+    "id": "alien_bloodied_brains_strudel",
+    "name": "Alien Bloodied Brains Strudel",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/8404.png",
+    "punchTiming": "1m 46s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Alien_Bloodied_Brains_Strudel",
+    "ingredients": [
+      {
+        "id": "space_poop",
+        "name": "Space Poop",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "zombie_brain",
+        "name": "Zombie Brain",
+        "quantity": 1,
+        "timing": "19.7s",
+        "requirement": "required"
+      },
+      {
+        "id": "slime",
+        "name": "Slime",
+        "quantity": 1,
+        "timing": "49.7s",
+        "requirement": "required"
+      },
+      {
+        "id": "putrid_gas",
+        "name": "Putrid Gas",
+        "quantity": 1,
+        "timing": "1m 45s",
+        "requirement": "required"
+      }
+    ]
+  },
+  {
+    "id": "apple_strudel",
+    "name": "Apple Strudel",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/4594.png",
+    "punchTiming": "1m 23s",
+    "heatLevel": "Low",
+    "foodBuff": "Tree Growth: Trees you plant grow 5% faster!",
+    "sourceUrl": "https://growtopiawiki.com/w/Apple_Strudel",
+    "ingredients": [
+      {
+        "id": "apple",
+        "name": "Apple",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "honey",
+        "name": "Honey",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "required"
+      },
+      {
+        "id": "dough",
+        "name": "Dough",
+        "quantity": 1,
+        "timing": "23.3s",
+        "requirement": "required"
+      },
+      {
+        "id": "egg",
+        "name": "Egg",
+        "quantity": 1,
+        "timing": "23.3s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "arroz_con_pollo",
+    "name": "Arroz Con Pollo",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/4604.png",
+    "punchTiming": "1m 40s",
+    "heatLevel": "Low",
+    "foodBuff": "Breaking Gems: 10% chance of a gem when you break a block.",
+    "sourceUrl": "https://growtopiawiki.com/w/Arroz_Con_Pollo",
+    "ingredients": [
+      {
+        "id": "rice",
+        "name": "Rice",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "onion",
+        "name": "Onion",
+        "quantity": 1,
+        "timing": "33.7s",
+        "requirement": "required"
+      },
+      {
+        "id": "chicken_meat",
+        "name": "Chicken Meat",
+        "quantity": 1,
+        "timing": "33.7s",
+        "requirement": "required"
+      },
+      {
+        "id": "tomato",
+        "name": "Tomato",
+        "quantity": 1,
+        "timing": "1m 10s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "bbq_bacon_burger",
+    "name": "BBQ Bacon Burger",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/4598.png",
+    "punchTiming": "1m 6s",
+    "heatLevel": "Low",
+    "foodBuff": "Superhero Gems: Get 100 gems from every Villain you defeat.",
+    "sourceUrl": "https://growtopiawiki.com/w/BBQ_Bacon_Burger",
+    "ingredients": [
+      {
+        "id": "ground_beef",
+        "name": "Ground Beef",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "dough",
+        "name": "Dough",
+        "quantity": 1,
+        "timing": "6.3s",
+        "requirement": "required"
+      },
+      {
+        "id": "bacon",
+        "name": "Bacon",
+        "quantity": 1,
+        "timing": "16.3s",
+        "requirement": "required"
+      },
+      {
+        "id": "tomato",
+        "name": "Tomato",
+        "quantity": 1,
+        "timing": "36.3s",
+        "requirement": "required"
+      },
+      {
+        "id": "lettuce",
+        "name": "Lettuce",
+        "quantity": 1,
+        "timing": "1m 5s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "beer_battered_fish_and_chips",
+    "name": "Beer-Battered Fish And Chips",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/4600.png",
+    "punchTiming": "2m",
+    "heatLevel": "Low",
+    "foodBuff": "Fishing Skill: Catch 5% larger fish!",
+    "sourceUrl": "https://growtopiawiki.com/w/Beer-Battered_Fish_And_Chips",
+    "ingredients": [
+      {
+        "id": "green_beer",
+        "name": "Green Beer",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "flour",
+        "name": "Flour",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "potato",
+        "name": "Potato",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "fish_chunk",
+        "name": "Fish Chunk",
+        "quantity": 1,
+        "timing": "1m 27s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
     "id": "berry_crepes",
     "name": "Berry Crepes",
-    "outputSpriteUrl": "https://static.wikia.nocookie.net/growtopia/images/7/7b/ItemSprites.png/revision/latest?cb=2024",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/4596.png",
+    "punchTiming": "1m",
     "heatLevel": "Low",
+    "foodBuff": "Surgery XP: Gain 30% more XP from Surgery!",
+    "sourceUrl": "https://growtopiawiki.com/w/Berry_Crepes",
+    "ingredients": [
+      {
+        "id": "flour",
+        "name": "Flour",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "egg",
+        "name": "Egg",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "26.7s",
+        "requirement": "required"
+      },
+      {
+        "id": "blueberry",
+        "name": "Blueberry",
+        "quantity": 1,
+        "timing": "40s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "blood_truffle_biscuits_with_sweet_radish_pie",
+    "name": "Blood Truffle Biscuits with Sweet Radish Pie",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/12156.png",
+    "punchTiming": "1m 14.6s",
+    "heatLevel": "Low",
+    "foodBuff": "Punch Damage: Punch like a mechanic!",
+    "sourceUrl": "https://growtopiawiki.com/w/Blood_Truffle_Biscuits_with_Sweet_Radish_Pie",
+    "ingredients": [
+      {
+        "id": "flour",
+        "name": "Flour",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "honey",
+        "name": "Honey",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "beat_root_puree",
+        "name": "Beat-root Puree",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "coconut_milk",
+        "name": "Coconut Milk",
+        "quantity": 1,
+        "timing": "1.9s",
+        "requirement": "required"
+      },
+      {
+        "id": "baking_chocolate",
+        "name": "Baking Chocolate",
+        "quantity": 1,
+        "timing": "24.5s",
+        "requirement": "required"
+      }
+    ]
+  },
+  {
+    "id": "chips_and_guacamole",
+    "name": "Chips And Guacamole",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/4674.png",
+    "punchTiming": "1m 6s",
+    "heatLevel": "Low",
+    "foodBuff": "Pet Gems: Get 50 Gems for beating a Pet Trainer.",
+    "sourceUrl": "https://growtopiawiki.com/w/Chips_And_Guacamole",
+    "ingredients": [
+      {
+        "id": "salsa",
+        "name": "Salsa",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "water_bucket",
+        "name": "Water Bucket",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "corn_meal",
+        "name": "Corn Meal",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "lemon",
+        "name": "Lemon",
+        "quantity": 1,
+        "timing": "1m 5s",
+        "requirement": "required"
+      },
+      {
+        "id": "avocado",
+        "name": "Avocado",
+        "quantity": 1,
+        "timing": "1m 5s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "chocolate_bunny",
+    "name": "Chocolate Bunny",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/5984.png",
+    "punchTiming": "1m",
+    "heatLevel": "Low",
+    "foodBuff": "High Jump: Your feet spring to life.",
+    "sourceUrl": "https://growtopiawiki.com/w/Chocolate_Bunny",
+    "ingredients": [
+      {
+        "id": "egg",
+        "name": "Egg",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "baking_chocolate",
+        "name": "Baking Chocolate",
+        "quantity": 1,
+        "timing": "10s",
+        "requirement": "required"
+      },
+      {
+        "id": "chocolate_sprinkles_block",
+        "name": "Chocolate Sprinkles Block",
+        "quantity": 1,
+        "timing": "44s",
+        "requirement": "required"
+      },
+      {
+        "id": "marshmallow",
+        "name": "Marshmallow",
+        "quantity": 1,
+        "timing": "50s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "chocolate_easter_bilby",
+    "name": "Chocolate Easter Bilby",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/9456.png",
+    "punchTiming": "1m",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Chocolate_Easter_Bilby",
+    "ingredients": [
+      {
+        "id": "easter_egg_growtopia",
+        "name": "Easter Egg - Growtopia",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "baking_chocolate",
+        "name": "Baking Chocolate",
+        "quantity": 1,
+        "timing": "10s",
+        "requirement": "required"
+      },
+      {
+        "id": "chocolate_sprinkles_block",
+        "name": "Chocolate Sprinkles Block",
+        "quantity": 1,
+        "timing": "44s",
+        "requirement": "required"
+      },
+      {
+        "id": "marshmallow",
+        "name": "Marshmallow",
+        "quantity": 1,
+        "timing": "50s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "coconut_tart",
+    "name": "Coconut Tart",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/7056.png",
+    "punchTiming": "1m 40s",
+    "heatLevel": "Low",
+    "foodBuff": "Ghost XP: Earn an extra 50 xp from catching ghosts!",
+    "sourceUrl": "https://growtopiawiki.com/w/Coconut_Tart",
+    "ingredients": [
+      {
+        "id": "flour",
+        "name": "Flour",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "rice",
+        "name": "Rice",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "coconut_milk",
+        "name": "Coconut Milk",
+        "quantity": 1,
+        "timing": "27s",
+        "requirement": "required"
+      },
+      {
+        "id": "baking_chocolate",
+        "name": "Baking Chocolate",
+        "quantity": 1,
+        "timing": "50s",
+        "requirement": "required"
+      },
+      {
+        "id": "cherry",
+        "name": "Cherry",
+        "quantity": 1,
+        "timing": "1m 30s",
+        "requirement": "required"
+      }
+    ]
+  },
+  {
+    "id": "composer_s_cookie",
+    "name": "Composer's Cookie",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/6906.png",
     "punchTiming": "1m 15s",
-    "foodBuff": "Restores 20% health and grants minor agility.",
-    "ingredients": [
-      { "id": "flour", "name": "Flour", "quantity": 2, "timing": "0s", "requirement": "required" },
-      { "id": "milk", "name": "Milk", "quantity": 1, "timing": "20s", "requirement": "required" },
-      { "id": "egg", "name": "Egg", "quantity": 1, "timing": "40s", "requirement": "required" },
-      { "id": "berries", "name": "Berries", "quantity": 1, "timing": "Anytime", "requirement": "optional", "notes": "optional spice" }
-    ],
-    "sourceUrl": "https://growtopiawiki.com/wiki/Berry_Crepes"
-  },
-  {
-    "id": "pizza",
-    "name": "Pizza",
-    "outputSpriteUrl": "https://static.wikia.nocookie.net/growtopia/images/7/7b/ItemSprites.png/revision/latest?cb=2024",
-    "heatLevel": "Medium",
-    "punchTiming": "1m 30s",
-    "foodBuff": "+20% punch damage for 30 minutes.",
-    "ingredients": [
-      { "id": "dough", "name": "Dough", "quantity": 2, "timing": "0s", "requirement": "required" },
-      { "id": "cheese", "name": "Cheese", "quantity": 1, "timing": "15s", "requirement": "required" },
-      { "id": "tomato", "name": "Tomato", "quantity": 1, "timing": "30s", "requirement": "required" },
-      { "id": "pepper", "name": "Pepper", "quantity": 1, "timing": "Anytime", "requirement": "optional", "notes": "optional spice" }
-    ],
-    "sourceUrl": "https://growtopiawiki.com/wiki/Pizza"
-  },
-  {
-    "id": "spaghetti",
-    "name": "Spaghetti",
-    "outputSpriteUrl": "https://static.wikia.nocookie.net/growtopia/images/7/7b/ItemSprites.png/revision/latest?cb=2024",
-    "heatLevel": "Medium",
-    "punchTiming": "1m 20s",
-    "foodBuff": "Restores full stamina.",
-    "ingredients": [
-      { "id": "dough", "name": "Dough", "quantity": 1, "timing": "0s", "requirement": "required" },
-      { "id": "tomato", "name": "Tomato", "quantity": 2, "timing": "15s", "requirement": "required" },
-      { "id": "meatball", "name": "Meatball", "quantity": 1, "timing": "35s", "requirement": "required" },
-      { "id": "garlic", "name": "Garlic", "quantity": 1, "timing": "Anytime", "requirement": "optional", "notes": "optional spice" }
-    ],
-    "sourceUrl": "https://growtopiawiki.com/wiki/Spaghetti"
-  },
-  {
-    "id": "fish_and_chips",
-    "name": "Fish and Chips",
-    "outputSpriteUrl": "https://static.wikia.nocookie.net/growtopia/images/7/7b/ItemSprites.png/revision/latest?cb=2024",
-    "heatLevel": "High",
-    "punchTiming": "45s",
-    "foodBuff": "+10% swimming speed.",
-    "ingredients": [
-      { "id": "fish", "name": "Fish", "quantity": 1, "timing": "0s", "requirement": "required" },
-      { "id": "potato", "name": "Potato", "quantity": 2, "timing": "10s", "requirement": "required" },
-      { "id": "oil", "name": "Oil", "quantity": 1, "timing": "20s", "requirement": "required" },
-      { "id": "salt", "name": "Salt", "quantity": 1, "timing": "Anytime", "requirement": "optional", "notes": "optional spice" }
-    ],
-    "sourceUrl": "https://growtopiawiki.com/wiki/Fish_and_Chips"
-  },
-  {
-    "id": "chocolate_cookie",
-    "name": "Chocolate Cookie",
-    "outputSpriteUrl": "https://static.wikia.nocookie.net/growtopia/images/7/7b/ItemSprites.png/revision/latest?cb=2024",
     "heatLevel": "Low",
-    "punchTiming": "50s",
-    "foodBuff": "Minor speed boost.",
+    "foodBuff": "Flavorsome Music: View musical notes in the world.",
+    "sourceUrl": "https://growtopiawiki.com/w/Composer%27s_Cookie",
     "ingredients": [
-      { "id": "dough", "name": "Dough", "quantity": 1, "timing": "0s", "requirement": "required" },
-      { "id": "chocolate", "name": "Chocolate", "quantity": 1, "timing": "10s", "requirement": "required" },
-      { "id": "sugar", "name": "Sugar", "quantity": 1, "timing": "20s", "requirement": "required" },
-      { "id": "vanilla", "name": "Vanilla", "quantity": 1, "timing": "Anytime", "requirement": "optional", "notes": "optional spice" }
-    ],
-    "sourceUrl": "https://growtopiawiki.com/wiki/Chocolate_Cookie"
+      {
+        "id": "flour",
+        "name": "Flour",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "honey",
+        "name": "Honey",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "required"
+      },
+      {
+        "id": "beat_root_puree",
+        "name": "Beat-root Puree",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "required"
+      },
+      {
+        "id": "chocolate_sprinkles_block",
+        "name": "Chocolate Sprinkles Block",
+        "quantity": 1,
+        "timing": "58s",
+        "requirement": "required"
+      },
+      {
+        "id": "cherry",
+        "name": "Cherry",
+        "quantity": 1,
+        "timing": "1m 5s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
   },
   {
-    "id": "beef_stew",
-    "name": "Beef Stew",
-    "outputSpriteUrl": "https://static.wikia.nocookie.net/growtopia/images/7/7b/ItemSprites.png/revision/latest?cb=2024",
+    "id": "deep_fried_tropical_ice_cream",
+    "name": "Deep-Fried Tropical Ice Cream",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/6316.png",
+    "punchTiming": "1m 23s",
     "heatLevel": "Low",
-    "punchTiming": "2m 00s",
-    "foodBuff": "Immunity to cold.",
+    "foodBuff": "Surgery XP: Gain 50% more XP from Surgery!",
+    "sourceUrl": "https://growtopiawiki.com/w/Deep-Fried_Tropical_Ice_Cream",
     "ingredients": [
-      { "id": "meat", "name": "Meat", "quantity": 2, "timing": "0s", "requirement": "required" },
-      { "id": "potato", "name": "Potato", "quantity": 1, "timing": "30s", "requirement": "required" },
-      { "id": "carrot", "name": "Carrot", "quantity": 1, "timing": "1m 00s", "requirement": "required" },
-      { "id": "onion", "name": "Onion", "quantity": 1, "timing": "Anytime", "requirement": "optional", "notes": "optional spice" }
-    ],
-    "sourceUrl": "https://growtopiawiki.com/wiki/Beef_Stew"
+      {
+        "id": "pineapple_slice",
+        "name": "Pineapple Slice",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "orange_juice",
+        "name": "Orange Juice",
+        "quantity": 1,
+        "timing": "43s",
+        "requirement": "required"
+      },
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "50s",
+        "requirement": "required"
+      },
+      {
+        "id": "blueberry",
+        "name": "Blueberry",
+        "quantity": 1,
+        "timing": "1m 3s",
+        "requirement": "required"
+      },
+      {
+        "id": "crushed_ice",
+        "name": "Crushed Ice",
+        "quantity": 1,
+        "timing": "1m 22s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
   },
   {
-    "id": "burrito",
-    "name": "Burrito",
-    "outputSpriteUrl": "https://static.wikia.nocookie.net/growtopia/images/7/7b/ItemSprites.png/revision/latest?cb=2024",
-    "heatLevel": "Medium",
-    "punchTiming": "1m 10s",
-    "foodBuff": "+15% jump height.",
+    "id": "detective_butter_lamb",
+    "name": "Detective Butter Lamb",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/10744.png",
+    "punchTiming": "1m 12.5s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Detective_Butter_Lamb",
     "ingredients": [
-      { "id": "tortilla", "name": "Tortilla", "quantity": 1, "timing": "0s", "requirement": "required" },
-      { "id": "bean", "name": "Bean", "quantity": 1, "timing": "10s", "requirement": "required" },
-      { "id": "cheese", "name": "Cheese", "quantity": 1, "timing": "25s", "requirement": "required" },
-      { "id": "hot_sauce", "name": "Hot Sauce", "quantity": 1, "timing": "Anytime", "requirement": "optional", "notes": "optional spice" }
-    ],
-    "sourceUrl": "https://growtopiawiki.com/wiki/Burrito"
+      {
+        "id": "coconut_milk",
+        "name": "Coconut Milk",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "corn_meal",
+        "name": "Corn Meal",
+        "quantity": 1,
+        "timing": "6s",
+        "requirement": "required"
+      },
+      {
+        "id": "bacon",
+        "name": "Bacon",
+        "quantity": 1,
+        "timing": "22.5s",
+        "requirement": "required"
+      },
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "39.5s",
+        "requirement": "required"
+      },
+      {
+        "id": "habanero_pepper",
+        "name": "Habanero Pepper",
+        "quantity": 1,
+        "timing": "1m 2s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "quantityRange": {
+          "min": 2,
+          "max": 3
+        },
+        "timing": "Anytime",
+        "requirement": "required"
+      }
+    ]
   },
   {
-    "id": "glazed_donut",
-    "name": "Glazed Donut",
-    "outputSpriteUrl": "https://static.wikia.nocookie.net/growtopia/images/7/7b/ItemSprites.png/revision/latest?cb=2024",
-    "heatLevel": "Medium",
-    "punchTiming": "1m 00s",
-    "foodBuff": "Increases gem drops by 5%.",
+    "id": "dumplings_hat",
+    "name": "Dumplings Hat",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/11638.png",
+    "punchTiming": "1m 56s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Dumplings_Hat",
     "ingredients": [
-      { "id": "dough", "name": "Dough", "quantity": 1, "timing": "0s", "requirement": "required" },
-      { "id": "sugar", "name": "Sugar", "quantity": 2, "timing": "15s", "requirement": "required" },
-      { "id": "oil", "name": "Oil", "quantity": 1, "timing": "30s", "requirement": "required" },
-      { "id": "sprinkles", "name": "Sprinkles", "quantity": 1, "timing": "Anytime", "requirement": "optional", "notes": "optional spice" }
-    ],
-    "sourceUrl": "https://growtopiawiki.com/wiki/Glazed_Donut"
+      {
+        "id": "cosmic_5_spice_star",
+        "name": "Cosmic 5-Spice Star",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "onion",
+        "name": "Onion",
+        "quantity": 1,
+        "timing": "50s",
+        "requirement": "required"
+      },
+      {
+        "id": "chicken_meat",
+        "name": "Chicken Meat",
+        "quantity": 1,
+        "timing": "51s",
+        "requirement": "required"
+      },
+      {
+        "id": "dough",
+        "name": "Dough",
+        "quantity": 1,
+        "timing": "58.5s",
+        "requirement": "required"
+      },
+      {
+        "id": "lettuce",
+        "name": "Lettuce",
+        "quantity": 1,
+        "timing": "1m 55s",
+        "requirement": "required"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "required"
+      }
+    ]
   },
   {
-    "id": "french_fries",
-    "name": "French Fries",
-    "outputSpriteUrl": "https://static.wikia.nocookie.net/growtopia/images/7/7b/ItemSprites.png/revision/latest?cb=2024",
-    "heatLevel": "High",
+    "id": "eggnog",
+    "name": "Eggnog",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/7466.png",
+    "punchTiming": "1m 13s",
+    "heatLevel": "Low",
+    "foodBuff": "Tree Decoration: Doubles how much a Tree Decoration decorates a Giving Tree.",
+    "sourceUrl": "https://growtopiawiki.com/w/Eggnog",
+    "ingredients": [
+      {
+        "id": "coconut_milk",
+        "name": "Coconut Milk",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "egg",
+        "name": "Egg",
+        "quantity": 1,
+        "timing": "13s",
+        "requirement": "required"
+      },
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "40s",
+        "requirement": "required"
+      },
+      {
+        "id": "ground_nutmeg",
+        "name": "Ground Nutmeg",
+        "quantity": 1,
+        "timing": "1m 12s",
+        "requirement": "required"
+      },
+      {
+        "id": "crushed_ice",
+        "name": "Crushed Ice",
+        "quantity": 1,
+        "timing": "1m 12s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "eggs_benedict",
+    "name": "Eggs Benedict",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/1474.png",
+    "punchTiming": "1m",
+    "heatLevel": "Low",
+    "foodBuff": "Extra XP: 25% chance of double XP for all actions.",
+    "sourceUrl": "https://growtopiawiki.com/w/Eggs_Benedict",
+    "ingredients": [
+      {
+        "id": "dough",
+        "name": "Dough",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "egg",
+        "name": "Egg",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "bacon",
+        "name": "Bacon",
+        "quantity": 1,
+        "timing": "10s",
+        "requirement": "required"
+      },
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "26s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "failed_butter_lamb",
+    "name": "Failed Butter Lamb",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/10746.png",
+    "punchTiming": "1m 12.5s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Failed_Butter_Lamb",
+    "ingredients": [
+      {
+        "id": "coconut_milk",
+        "name": "Coconut Milk",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "corn_meal",
+        "name": "Corn Meal",
+        "quantity": 1,
+        "timing": "6s",
+        "requirement": "required"
+      },
+      {
+        "id": "bacon",
+        "name": "Bacon",
+        "quantity": 1,
+        "timing": "22.5s",
+        "requirement": "required"
+      },
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "39.5s",
+        "requirement": "required"
+      },
+      {
+        "id": "habanero_pepper",
+        "name": "Habanero Pepper",
+        "quantity": 1,
+        "timing": "1m 2s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "quantityRange": {
+          "min": 2,
+          "max": 3
+        },
+        "timing": "Anytime",
+        "requirement": "required"
+      }
+    ]
+  },
+  {
+    "id": "festering_urchin_poop_pie",
+    "name": "Festering Urchin & Poop Pie",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/8400.png",
+    "punchTiming": "1m 46s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Festering_Urchin_%26_Poop_Pie",
+    "ingredients": [
+      {
+        "id": "space_poop",
+        "name": "Space Poop",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "gruel",
+        "name": "Gruel",
+        "quantity": 1,
+        "timing": "53s",
+        "requirement": "required"
+      },
+      {
+        "id": "rotting_sea_goo",
+        "name": "Rotting Sea Goo",
+        "quantity": 1,
+        "timing": "1m 1s",
+        "requirement": "required"
+      },
+      {
+        "id": "sea_urchin",
+        "name": "Sea Urchin",
+        "quantity": 1,
+        "timing": "1m 9s",
+        "requirement": "required"
+      }
+    ]
+  },
+  {
+    "id": "flashback_flan",
+    "name": "Flashback Flan",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/6916.png",
+    "punchTiming": "1m",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Flashback_Flan",
+    "ingredients": [
+      {
+        "id": "egg",
+        "name": "Egg",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "chrono_luminescent_liquid",
+        "name": "Chrono-Luminescent Liquid",
+        "quantity": 1,
+        "timing": "10s",
+        "requirement": "required"
+      },
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "26s",
+        "requirement": "required"
+      },
+      {
+        "id": "tomato",
+        "name": "Tomato",
+        "quantity": 1,
+        "timing": "29s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "gemonade",
+    "name": "Gemonade",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/6914.png",
     "punchTiming": "40s",
-    "foodBuff": "+5% walk speed.",
+    "heatLevel": "Low",
+    "foodBuff": "Sparkling Gems: Get extra gems from a variety of actions!",
+    "sourceUrl": "https://growtopiawiki.com/w/Gemonade",
     "ingredients": [
-      { "id": "potato", "name": "Potato", "quantity": 2, "timing": "0s", "requirement": "required" },
-      { "id": "oil", "name": "Oil", "quantity": 1, "timing": "15s", "requirement": "required" },
-      { "id": "salt", "name": "Salt", "quantity": 1, "timing": "Anytime", "requirement": "optional", "notes": "optional spice" }
-    ],
-    "sourceUrl": "https://growtopiawiki.com/wiki/French_Fries"
+      {
+        "id": "water_bucket",
+        "name": "Water Bucket",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "orange_juice",
+        "name": "Orange Juice",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "lemon",
+        "name": "Lemon",
+        "quantity": 1,
+        "timing": "38s",
+        "requirement": "required"
+      },
+      {
+        "id": "sprig_of_mint",
+        "name": "Sprig of Mint",
+        "quantity": 1,
+        "timing": "38s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 3,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
   },
   {
-    "id": "apple_pie",
-    "name": "Apple Pie",
-    "outputSpriteUrl": "https://static.wikia.nocookie.net/growtopia/images/7/7b/ItemSprites.png/revision/latest?cb=2024",
+    "id": "gingerbread_cookie",
+    "name": "Gingerbread Cookie",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/5452.png",
+    "punchTiming": "1m 20s",
     "heatLevel": "Low",
-    "punchTiming": "1m 45s",
-    "foodBuff": "Slow health regeneration.",
+    "foodBuff": "Triple XP: 10% chance of getting triple XP for all actions",
+    "sourceUrl": "https://growtopiawiki.com/w/Gingerbread_Cookie",
     "ingredients": [
-      { "id": "dough", "name": "Dough", "quantity": 1, "timing": "0s", "requirement": "required" },
-      { "id": "apple", "name": "Apple", "quantity": 2, "timing": "20s", "requirement": "required" },
-      { "id": "sugar", "name": "Sugar", "quantity": 1, "timing": "40s", "requirement": "required" },
-      { "id": "cinnamon", "name": "Cinnamon", "quantity": 1, "timing": "Anytime", "requirement": "optional", "notes": "optional spice" }
-    ],
-    "sourceUrl": "https://growtopiawiki.com/wiki/Apple_Pie"
+      {
+        "id": "gingerbread_dough",
+        "name": "Gingerbread Dough",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "honey",
+        "name": "Honey",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "required"
+      },
+      {
+        "id": "egg",
+        "name": "Egg",
+        "quantity": 1,
+        "timing": "20s",
+        "requirement": "required"
+      },
+      {
+        "id": "baking_chocolate",
+        "name": "Baking Chocolate",
+        "quantity": 1,
+        "timing": "30s",
+        "requirement": "required"
+      },
+      {
+        "id": "chocolate_sprinkles_block",
+        "name": "Chocolate Sprinkles Block",
+        "quantity": 1,
+        "timing": "1m 3s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "gingerbread_man",
+    "name": "Gingerbread Man",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/5414.png",
+    "punchTiming": "1m 20s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Gingerbread_Man",
+    "ingredients": [
+      {
+        "id": "gingerbread_dough",
+        "name": "Gingerbread Dough",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "honey",
+        "name": "Honey",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "required"
+      },
+      {
+        "id": "egg",
+        "name": "Egg",
+        "quantity": 1,
+        "timing": "20s",
+        "requirement": "required"
+      },
+      {
+        "id": "baking_chocolate",
+        "name": "Baking Chocolate",
+        "quantity": 1,
+        "timing": "30s",
+        "requirement": "required"
+      },
+      {
+        "id": "chocolate_sprinkles_block",
+        "name": "Chocolate Sprinkles Block",
+        "quantity": 1,
+        "timing": "1m 3s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "glutton_s_gazpacho",
+    "name": "Glutton's Gazpacho",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/6908.png",
+    "punchTiming": "1m 30s",
+    "heatLevel": "Low",
+    "foodBuff": "Increased food buffs: Increase Food Buffs duration by 30%",
+    "sourceUrl": "https://growtopiawiki.com/w/Glutton%27s_Gazpacho",
+    "ingredients": [
+      {
+        "id": "primordial_soup",
+        "name": "Primordial Soup",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "onion",
+        "name": "Onion",
+        "quantity": 1,
+        "timing": "23s",
+        "requirement": "required"
+      },
+      {
+        "id": "tomato",
+        "name": "Tomato",
+        "quantity": 1,
+        "timing": "1m",
+        "requirement": "required"
+      },
+      {
+        "id": "lemon",
+        "name": "Lemon",
+        "quantity": 1,
+        "timing": "1m 29s",
+        "requirement": "required"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "growlectables",
+    "name": "Growlectables",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/6910.png",
+    "punchTiming": "1m 43s",
+    "heatLevel": "Low",
+    "foodBuff": "Delectable: 25% chance of double Growtokens from Daily Quests.",
+    "sourceUrl": "https://growtopiawiki.com/w/Growlectables",
+    "ingredients": [
+      {
+        "id": "flour",
+        "name": "Flour",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "caramel",
+        "name": "Caramel",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "pineapple_slice",
+        "name": "Pineapple Slice",
+        "quantity": 1,
+        "timing": "20s",
+        "requirement": "required"
+      },
+      {
+        "id": "blueberry",
+        "name": "Blueberry",
+        "quantity": 1,
+        "timing": "1m 23s",
+        "requirement": "required"
+      },
+      {
+        "id": "cherry",
+        "name": "Cherry",
+        "quantity": 1,
+        "timing": "1m 33s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 3,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "heart_cookies",
+    "name": "Heart Cookies",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/14246.png",
+    "punchTiming": "1m 55s",
+    "heatLevel": "Low",
+    "foodBuff": "Heart Cookies: Wouldn't it be nice?",
+    "sourceUrl": "https://growtopiawiki.com/w/Heart_Cookies",
+    "ingredients": [
+      {
+        "id": "cosmic_5_spice_star",
+        "name": "Cosmic 5-Spice Star",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "dough",
+        "name": "Dough",
+        "quantity": 1,
+        "timing": "56s",
+        "requirement": "required"
+      },
+      {
+        "id": "chocolate_sprinkles_block",
+        "name": "Chocolate Sprinkles Block",
+        "quantity": 1,
+        "timing": "1m 38s",
+        "requirement": "required"
+      },
+      {
+        "id": "honey",
+        "name": "Honey",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "required"
+      }
+    ]
+  },
+  {
+    "id": "homemade_fish_taco",
+    "name": "Homemade Fish Taco",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/4592.png",
+    "punchTiming": "1m",
+    "heatLevel": "Low",
+    "foodBuff": "Fishing Gems: Gain 1 gem per 5lbs of fish caught!",
+    "sourceUrl": "https://growtopiawiki.com/w/Homemade_Fish_Taco",
+    "ingredients": [
+      {
+        "id": "salsa",
+        "name": "Salsa",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "dough",
+        "name": "Dough",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "fish_chunk",
+        "name": "Fish Chunk",
+        "quantity": 1,
+        "timing": "26.5s",
+        "requirement": "required"
+      },
+      {
+        "id": "swiss_cheese_block",
+        "name": "Swiss Cheese Block",
+        "quantity": 1,
+        "timing": "49s",
+        "requirement": "required"
+      },
+      {
+        "id": "lettuce",
+        "name": "Lettuce",
+        "quantity": 1,
+        "timing": "57s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "hot_chocolate",
+    "name": "Hot Chocolate",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/3240.png",
+    "punchTiming": "50s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Hot_Chocolate",
+    "ingredients": [
+      {
+        "id": "water_bucket",
+        "name": "Water Bucket",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "baking_chocolate",
+        "name": "Baking Chocolate",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "honey",
+        "name": "Honey",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "required"
+      },
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "16s",
+        "requirement": "required"
+      },
+      {
+        "id": "marshmallow",
+        "name": "Marshmallow",
+        "quantity": 1,
+        "timing": "40s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 3,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "magnifico_carne_guacamole_bueno",
+    "name": "Magnifico Carne Guacamole - Bueno",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/6046.png",
+    "punchTiming": "1m 6s",
+    "heatLevel": "Low",
+    "foodBuff": "Pet Gems 100: Get 100 Gems for beating a Pet Trainer.",
+    "sourceUrl": "https://growtopiawiki.com/w/Magnifico_Carne_Guacamole_-_Bueno",
+    "ingredients": [
+      {
+        "id": "ground_beef",
+        "name": "Ground Beef",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "bacon",
+        "name": "Bacon",
+        "quantity": 1,
+        "timing": "16s",
+        "requirement": "required"
+      },
+      {
+        "id": "tomato",
+        "name": "Tomato",
+        "quantity": 1,
+        "timing": "36s",
+        "requirement": "required"
+      },
+      {
+        "id": "chips_and_guacamole",
+        "name": "Chips And Guacamole",
+        "quantity": 1,
+        "timing": "53s",
+        "requirement": "required"
+      },
+      {
+        "id": "lemon",
+        "name": "Lemon",
+        "quantity": 1,
+        "timing": "1m 5s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "magnifico_carne_guacamole_sabroso",
+    "name": "Magnifico Carne Guacamole - Sabroso",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/6048.png",
+    "punchTiming": "1m 6s",
+    "heatLevel": "Low",
+    "foodBuff": "Pet Gems 150: Get 150 Gems for beating a Pet Trainer.",
+    "sourceUrl": "https://growtopiawiki.com/w/Magnifico_Carne_Guacamole_-_Sabroso",
+    "ingredients": [
+      {
+        "id": "ground_beef",
+        "name": "Ground Beef",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "bacon",
+        "name": "Bacon",
+        "quantity": 1,
+        "timing": "16s",
+        "requirement": "required"
+      },
+      {
+        "id": "tomato",
+        "name": "Tomato",
+        "quantity": 1,
+        "timing": "36s",
+        "requirement": "required"
+      },
+      {
+        "id": "chips_and_guacamole",
+        "name": "Chips And Guacamole",
+        "quantity": 1,
+        "timing": "53s",
+        "requirement": "required"
+      },
+      {
+        "id": "lemon",
+        "name": "Lemon",
+        "quantity": 1,
+        "timing": "1m 5s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "magnifico_carne_guacamole_perfecto",
+    "name": "Magnifico Carne Guacamole - Perfecto",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/6050.png",
+    "punchTiming": "1m 6s",
+    "heatLevel": "Low",
+    "foodBuff": "Pet Gems 200: Get 200 Gems for beating a Pet Trainer.",
+    "sourceUrl": "https://growtopiawiki.com/w/Magnifico_Carne_Guacamole_-_Perfecto",
+    "ingredients": [
+      {
+        "id": "ground_beef",
+        "name": "Ground Beef",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "bacon",
+        "name": "Bacon",
+        "quantity": 1,
+        "timing": "16s",
+        "requirement": "required"
+      },
+      {
+        "id": "tomato",
+        "name": "Tomato",
+        "quantity": 1,
+        "timing": "36s",
+        "requirement": "required"
+      },
+      {
+        "id": "chips_and_guacamole",
+        "name": "Chips And Guacamole",
+        "quantity": 1,
+        "timing": "53s",
+        "requirement": "required"
+      },
+      {
+        "id": "lemon",
+        "name": "Lemon",
+        "quantity": 1,
+        "timing": "1m 5s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "nutri_goop",
+    "name": "Nutri-goop",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/12154.png",
+    "punchTiming": "1m 6.3s",
+    "heatLevel": "Low",
+    "foodBuff": "Grow Effect: Big and strong!",
+    "sourceUrl": "https://growtopiawiki.com/w/Nutri-goop",
+    "ingredients": [
+      {
+        "id": "corn_meal",
+        "name": "Corn Meal",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "egg",
+        "name": "Egg",
+        "quantity": 1,
+        "timing": "6.3s",
+        "requirement": "required"
+      },
+      {
+        "id": "sweet_potato_mash",
+        "name": "Sweet Potato Mash",
+        "quantity": 1,
+        "timing": "6.3s",
+        "requirement": "required"
+      },
+      {
+        "id": "gruel",
+        "name": "Gruel",
+        "quantity": 1,
+        "timing": "13s",
+        "requirement": "required"
+      },
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "33s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "pet_stinky_onion",
+    "name": "Pet Stinky Onion",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/13704.png",
+    "punchTiming": "1m 30s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Pet_Stinky_Onion",
+    "ingredients": [
+      {
+        "id": "primordial_soup",
+        "name": "Primordial Soup",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "onion",
+        "name": "Onion",
+        "quantity": 1,
+        "timing": "28s",
+        "requirement": "required"
+      },
+      {
+        "id": "habanero_pepper",
+        "name": "Habanero Pepper",
+        "quantity": 1,
+        "timing": "1m 20s",
+        "requirement": "required"
+      },
+      {
+        "id": "putrid_gas",
+        "name": "Putrid Gas",
+        "quantity": 1,
+        "timing": "1m 30s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 3,
+        "timing": "Anytime",
+        "requirement": "required"
+      }
+    ]
+  },
+  {
+    "id": "pet_twin_cherries",
+    "name": "Pet Twin Cherries",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/13706.png",
+    "punchTiming": "1m 30s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Pet_Twin_Cherries",
+    "ingredients": [
+      {
+        "id": "primordial_soup",
+        "name": "Primordial Soup",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "baking_chocolate",
+        "name": "Baking Chocolate",
+        "quantity": 1,
+        "timing": "40s",
+        "requirement": "required"
+      },
+      {
+        "id": "marshmallow",
+        "name": "Marshmallow",
+        "quantity": 1,
+        "timing": "1m 20s",
+        "requirement": "required"
+      },
+      {
+        "id": "cherry",
+        "name": "Cherry",
+        "quantity": 1,
+        "timing": "1m 20s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "required"
+      }
+    ]
+  },
+  {
+    "id": "pineapple_pizza_slice",
+    "name": "Pineapple Pizza Slice",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/10988.png",
+    "punchTiming": "1m 21.5s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Pineapple_Pizza_Slice",
+    "ingredients": [
+      {
+        "id": "pineapple_slice",
+        "name": "Pineapple Slice",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "dough",
+        "name": "Dough",
+        "quantity": 1,
+        "timing": "22s",
+        "requirement": "required"
+      },
+      {
+        "id": "bacon",
+        "name": "Bacon",
+        "quantity": 1,
+        "timing": "32s",
+        "requirement": "required"
+      },
+      {
+        "id": "tomato",
+        "name": "Tomato",
+        "quantity": 1,
+        "timing": "51s",
+        "requirement": "required"
+      },
+      {
+        "id": "swiss_cheese_block",
+        "name": "Swiss Cheese Block",
+        "quantity": 1,
+        "timing": "1m 11s",
+        "requirement": "required"
+      }
+    ]
+  },
+  {
+    "id": "pineapple_turnover",
+    "name": "Pineapple Turnover",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/4768.png",
+    "punchTiming": "1m 23s",
+    "heatLevel": "Low",
+    "foodBuff": "Consumable XP: Get triple XP for using consumables.",
+    "sourceUrl": "https://growtopiawiki.com/w/Pineapple_Turnover",
+    "ingredients": [
+      {
+        "id": "pineapple_slice",
+        "name": "Pineapple Slice",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "dough",
+        "name": "Dough",
+        "quantity": 1,
+        "timing": "23s",
+        "requirement": "required"
+      },
+      {
+        "id": "pineapple_daiquiri",
+        "name": "Pineapple Daiquiri",
+        "quantity": 1,
+        "timing": "43s",
+        "requirement": "required"
+      },
+      {
+        "id": "cherry",
+        "name": "Cherry",
+        "quantity": 1,
+        "timing": "1m 13s",
+        "requirement": "required"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "pumpkin_pie",
+    "name": "Pumpkin Pie",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/7464.png",
+    "punchTiming": "1m 21s",
+    "heatLevel": "Low",
+    "foodBuff": "Happy GROWCH: Doubles the points per [Winter Gift](/w/Winter_Gift \"Winter Gift\") given to [GROWCH](/w/Growch \"Growch\").",
+    "sourceUrl": "https://growtopiawiki.com/w/Pumpkin_Pie",
+    "ingredients": [
+      {
+        "id": "gingerbread_dough",
+        "name": "Gingerbread Dough",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "egg",
+        "name": "Egg",
+        "quantity": 1,
+        "timing": "20s",
+        "requirement": "required"
+      },
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "46s",
+        "requirement": "required"
+      },
+      {
+        "id": "pumpkin_block",
+        "name": "Pumpkin Block",
+        "quantity": 1,
+        "timing": "54s",
+        "requirement": "required"
+      },
+      {
+        "id": "ground_nutmeg",
+        "name": "Ground Nutmeg",
+        "quantity": 1,
+        "timing": "1m 20s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "putrid_gas_filled_blood_maggot_crepes",
+    "name": "Putrid Gas Filled Blood Maggot Crepes",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/8402.png",
+    "punchTiming": "33s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Putrid_Gas_Filled_Blood_Maggot_Crepes",
+    "ingredients": [
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "rotten_egg",
+        "name": "Rotten Egg",
+        "quantity": 1,
+        "timing": "3s",
+        "requirement": "required"
+      },
+      {
+        "id": "burnt_slime",
+        "name": "Burnt Slime",
+        "quantity": 1,
+        "timing": "10s",
+        "requirement": "required"
+      },
+      {
+        "id": "putrid_gas",
+        "name": "Putrid Gas",
+        "quantity": 1,
+        "timing": "32s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "rotting_fish_guts_club_sandwich",
+    "name": "Rotting Fish Guts Club Sandwich",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/8406.png",
+    "punchTiming": "45s",
+    "heatLevel": "Low",
+    "foodBuff": null,
+    "sourceUrl": "https://growtopiawiki.com/w/Rotting_Fish_Guts_Club_Sandwich",
+    "ingredients": [
+      {
+        "id": "rotting_sea_goo",
+        "name": "Rotting Sea Goo",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "fish_chunk",
+        "name": "Fish Chunk",
+        "quantity": 1,
+        "timing": "12s",
+        "requirement": "required"
+      },
+      {
+        "id": "tomato",
+        "name": "Tomato",
+        "quantity": 1,
+        "timing": "15s",
+        "requirement": "required"
+      },
+      {
+        "id": "burnt_slime",
+        "name": "Burnt Slime",
+        "quantity": 1,
+        "timing": "22s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "skill_spice",
+    "name": "Skill Spice",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/6912.png",
+    "punchTiming": "1m 56s",
+    "heatLevel": "Low",
+    "foodBuff": "Spicey Skills: Reduce your skill fails by half in both Surgery and Startopia missions.",
+    "sourceUrl": "https://growtopiawiki.com/w/Skill_Spice",
+    "ingredients": [
+      {
+        "id": "cosmic_5_spice_star",
+        "name": "Cosmic 5-Spice Star",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "rice",
+        "name": "Rice",
+        "quantity": 1,
+        "timing": "16s",
+        "requirement": "required"
+      },
+      {
+        "id": "onion",
+        "name": "Onion",
+        "quantity": 1,
+        "timing": "50s",
+        "requirement": "required"
+      },
+      {
+        "id": "milk",
+        "name": "Milk",
+        "quantity": 1,
+        "timing": "1m 23s",
+        "requirement": "required"
+      },
+      {
+        "id": "tomato",
+        "name": "Tomato",
+        "quantity": 1,
+        "timing": "1m 26s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "sugar",
+        "name": "Sugar",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "sweet_potato_tots",
+    "name": "Sweet Potato Tots",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/10270.png",
+    "punchTiming": "1m 6.3s",
+    "heatLevel": "Low",
+    "foodBuff": "Higher Quality Food: Unknown",
+    "sourceUrl": "https://growtopiawiki.com/w/Sweet_Potato_Tots",
+    "ingredients": [
+      {
+        "id": "flour",
+        "name": "Flour",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "onion",
+        "name": "Onion",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "egg",
+        "name": "Egg",
+        "quantity": 1,
+        "timing": "6.3s",
+        "requirement": "required"
+      },
+      {
+        "id": "sweet_potato_mash",
+        "name": "Sweet Potato Mash",
+        "quantity": 1,
+        "timing": "6.3s",
+        "requirement": "required"
+      },
+      {
+        "id": "bacon",
+        "name": "Bacon",
+        "quantity": 1,
+        "timing": "16.3s",
+        "requirement": "required"
+      },
+      {
+        "id": "salt",
+        "name": "Salt",
+        "quantity": 1,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      },
+      {
+        "id": "pepper",
+        "name": "Pepper",
+        "quantity": 2,
+        "timing": "Anytime",
+        "requirement": "optional",
+        "notes": "optional spice"
+      }
+    ]
+  },
+  {
+    "id": "trawlerman_s_friend",
+    "name": "Trawlerman's Friend",
+    "outputSpriteUrl": "https://cdn.growtopiawiki.com/sprites/10218.png",
+    "punchTiming": "1m 47s",
+    "heatLevel": "Low",
+    "foodBuff": "Trawlerman's Friend: Reduce Fishing Time",
+    "sourceUrl": "https://growtopiawiki.com/w/Trawlerman%27s_Friend",
+    "ingredients": [
+      {
+        "id": "large_frozen_chunk",
+        "name": "Large Frozen Chunk",
+        "quantity": 1,
+        "timing": "0s",
+        "requirement": "required"
+      },
+      {
+        "id": "large_radioactive_bit",
+        "name": "Large Radioactive Bit",
+        "quantity": 1,
+        "timing": "47s",
+        "requirement": "required"
+      },
+      {
+        "id": "cobweb",
+        "name": "Cobweb",
+        "quantity": 1,
+        "timing": "1m 17s",
+        "requirement": "required"
+      },
+      {
+        "id": "pumpkin_candy",
+        "name": "Pumpkin Candy",
+        "quantity": 1,
+        "timing": "1m 40s",
+        "requirement": "required"
+      }
+    ]
   }
 ]

@@ -7,16 +7,43 @@ vi.mock("../../../../src/modules/profit/profit.service.js", () => {
   return {
     profitService: {
       cook: vi.fn(),
-      searchRecipes: vi.fn().mockReturnValue([{ name: "Pizza", id: "pizza" }]),
+      getRecipe: vi.fn(),
+      listPrices: vi.fn().mockResolvedValue([]),
+      searchRecipes: vi.fn().mockReturnValue([{ name: "Berry Crepes", id: "berry_crepes" }]),
     },
   };
 });
 
+vi.mock("../../../../src/modules/profit/interactions/cook.interactions.js", () => {
+  return {
+    executeCookCommand: vi.fn(async () => undefined),
+    handleCookButton: vi.fn(async () => undefined),
+    handleCookModalSubmit: vi.fn(async () => undefined),
+    isCookButtonCustomId: (id: string) => id.startsWith("cook:"),
+    isCookModalCustomId: (id: string) => id.startsWith("cook-modal:"),
+  };
+});
+
+import { executeCookCommand } from "../../../../src/modules/profit/interactions/cook.interactions.js";
+
 describe("/cook command", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(profitService.getRecipe).mockReturnValue({
+      id: "berry_crepes",
+      name: "Berry Crepes",
+      heatLevel: "Low",
+      punchTiming: "1m",
+      foodBuff: "Gain 30% XP",
+      ingredients: [
+        { id: "flour", name: "Flour", quantity: 1, timing: "0s", requirement: "required" },
+        { id: "egg", name: "Egg", quantity: 1, timing: "0s", requirement: "required" },
+        { id: "milk", name: "Milk", quantity: 1, timing: "26.7s", requirement: "required" },
+        { id: "blueberry", name: "Blueberry", quantity: 1, timing: "40s", requirement: "required" },
+      ],
+    } as any);
     vi.mocked(profitService.searchRecipes).mockReturnValue([
-      { name: "Pizza", id: "pizza" },
+      { name: "Berry Crepes", id: "berry_crepes" },
     ] as never);
   });
 
@@ -28,7 +55,7 @@ describe("/cook command", () => {
     expect(optionNames).toContain("sell");
     expect(optionNames).toContain("qty");
     expect(optionNames).toContain("include-spices");
-    expect(optionNames).toContain("overrides");
+    expect(optionNames).not.toContain("overrides");
   });
 
   it("should be registered in allCommands", () => {
@@ -41,7 +68,7 @@ describe("/cook command", () => {
   it("should handle autocomplete for dishes", async () => {
     const mockInteraction = {
       options: {
-        getFocused: vi.fn().mockReturnValue("piz"),
+        getFocused: vi.fn().mockReturnValue("ber"),
       },
       respond: vi.fn(),
     } as any;
@@ -49,60 +76,15 @@ describe("/cook command", () => {
     expect(cookCommand.autocomplete).toBeDefined();
     await cookCommand.autocomplete!(mockInteraction);
     expect(mockInteraction.respond).toHaveBeenCalledWith([
-      { name: "Pizza", value: "Pizza" },
+      { name: "Berry Crepes", value: "Berry Crepes" },
     ]);
   });
 
-  it("should reply with missing prices help when status is missing_prices", async () => {
-    vi.mocked(profitService.cook).mockResolvedValueOnce({
-      status: "missing_prices",
-      recipe: { name: "Pizza" } as any,
-      missing: ["Cheese", "Tomato"],
-      suggestedCommands: ["/prices set ingredient:Cheese rate:<rate>"],
-    });
-
-    const reply = vi.fn();
-    const mockInteraction = {
-      guildId: "guild-123",
-      options: {
-        getString: (name: string) => (name === "dish" ? "Pizza" : null),
-        getInteger: () => null,
-        getBoolean: () => null,
-      },
-      reply,
-    } as any;
+  it("should delegate execution to the worksheet interaction flow", async () => {
+    const mockInteraction = { guildId: "guild-123" } as any;
 
     await cookCommand.execute(mockInteraction);
 
-    expect(reply).toHaveBeenCalledWith(
-      expect.objectContaining({
-        content: expect.stringContaining("Missing prices for"),
-      })
-    );
-  });
-
-  it("should reply with error message when service throws", async () => {
-    vi.mocked(profitService.cook).mockRejectedValueOnce(
-      new Error("Recipe not found: Lasagna")
-    );
-
-    const reply = vi.fn();
-    const mockInteraction = {
-      guildId: "guild-123",
-      options: {
-        getString: (name: string) => (name === "dish" ? "Lasagna" : null),
-        getInteger: () => null,
-        getBoolean: () => null,
-      },
-      reply,
-    } as any;
-
-    await cookCommand.execute(mockInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      expect.objectContaining({
-        content: expect.stringContaining("Recipe not found: Lasagna"),
-      })
-    );
+    expect(executeCookCommand).toHaveBeenCalledWith(mockInteraction);
   });
 });

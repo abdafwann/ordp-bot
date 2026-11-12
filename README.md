@@ -16,13 +16,16 @@ A modern, production-ready, modular Discord bot written in **TypeScript (discord
   - `/ask prompt:<your question>`
   - Direct `@Bot` mentions in chat.
 
-### 2. 🐙 GitHub Activity Logger (Real-Time Webhook)
+### 2. 🐙 GitHub Activity Logger (Repo-Scoped)
 - **Built-in HTTP Webhook Server:** Listens on port `3000` (or `PORT`) at `/api/webhooks/github`.
 - **HMAC Signature Verification:** Verifies `X-Hub-Signature-256` using `GITHUB_WEBHOOK_SECRET`.
+- **Repo-Scoped Routing:** Events are routed by `repository.full_name` to a per-repo channel; unmapped repos fall back to `GITHUB_FALLBACK_CHANNEL_ID`.
+- **`/repo` Command:** `/repo add <owner/repo> [channel]` (auto-creates `#github-owner-repo` if omitted), `/repo remove`, `/repo list`.
 - **Rich Embed Notifications:**
   - `push`: Formats branch, author, commit count, and commit diff links.
   - `pull_request`: Formats PR title, state, additions/deletions, and links.
   - `issues`: Formats issue creation and closure alerts.
+  - `workflow_run`: CI status with color/emoji by conclusion (success/failure/in-progress).
 
 ### 3. 🛡️ Server Moderation & Support Tickets
 - **Moderation Commands:**
@@ -42,6 +45,13 @@ A modern, production-ready, modular Discord bot written in **TypeScript (discord
   - Commands: `/rank [user]`, `/leaderboard`.
 - **Virtual Economy:**
   - Commands: `/daily` (claim free coins every 24h), `/balance [user]`, `/coinflip <amount> <heads|tails>`, `/pay <user> <amount>`.
+
+### 5. 📋 Logging Pipeline
+- **Agent Audit Log Endpoint:** `POST /api/audit-log` accepts `{kind: "audit", timestamp, command, severity?, context?}` (single or `{entries: [...]}` batch) or `{kind: "narration", timestamp, summary, title?}`.
+  - `audit` → `AUDIT_LOG_CHANNEL_ID` (`#sys-feed`); warn/error also mirrored to `SYS_ALERTS_CHANNEL_ID` (`#sys-alerts`), with `@owner` ping on `error`.
+  - `narration` → `NARRATION_CHANNEL_ID` (`#hermes-logs`).
+- **Crash Self-Reporting:** `uncaughtException`, `unhandledRejection`, Discord client/shard errors → `#sys-alerts` (best-effort, exit on fatal).
+- **Server Logs:** member join/leave, role changes, message edit/delete, and moderation actions (warn/timeout/kick/ban) → `SERVER_LOGS_CHANNEL_ID` (`#server-logs`).
 
 ---
 
@@ -73,10 +83,10 @@ DISCORD_TOKEN=your_bot_token_here
 DISCORD_CLIENT_ID=your_client_id_here
 DISCORD_GUILD_ID=your_guild_id_optional_for_instant_dev_commands
 
-# 9router AI Gateway
-ROUTER_BASE_URL=https://api.9router.com/v1
-ROUTER_API_KEY=your_9router_api_key_here
-ROUTER_MODEL=gpt-4o-mini
+# OmniRoute AI Gateway (OpenAI Compatible)
+OMNIROUTE_BASE_URL=http://localhost:8000/v1
+OMNIROUTE_API_KEY=your_omniroute_api_key_or_dummy_key
+OMNIROUTE_MODEL=gpt-4o-mini
 AI_MAX_CONTEXT_MESSAGES=10
 AI_MAX_CONTEXT_AGE_MINUTES=30
 
@@ -84,17 +94,27 @@ AI_MAX_CONTEXT_AGE_MINUTES=30
 PORT=3000
 GITHUB_WEBHOOK_SECRET=your_github_webhook_secret_here
 GITHUB_DEFAULT_CHANNEL_ID=your_discord_channel_id_for_git_logs
+GITHUB_FALLBACK_CHANNEL_ID=your_discord_channel_id_for_unmapped_repos
+
+# Agent Audit Logging
+AUDIT_LOG_CHANNEL_ID=your_discord_channel_id_for_agent_logs
+NARRATION_CHANNEL_ID=your_discord_channel_id_for_hermes_narration
+SYS_ALERTS_CHANNEL_ID=your_discord_channel_id_for_alerts
+SERVER_LOGS_CHANNEL_ID=your_discord_channel_id_for_server_logs
 
 # Database
 DATABASE_URL="file:./dev.db"
 ```
 
 ### 4. Setting Up GitHub Webhook
-1. Go to your GitHub repository **Settings** -> **Webhooks** -> **Add webhook**.
-2. **Payload URL:** `http://<your-server-or-tunnel-url>:3000/api/webhooks/github` (use Cloudflare Tunnel, Ngrok, or your public IP).
-3. **Content type:** `application/json`
-4. **Secret:** Set the same secret as `GITHUB_WEBHOOK_SECRET` in `.env`.
-5. **Events:** Select "Send me everything" or choose *Pushes*, *Pull requests*, and *Issues*.
+**Recommended (GitHub App, covers all repos at once):**
+1. GitHub → **Settings → Developer settings → GitHub Apps → New GitHub App**.
+2. **Webhook URL:** `http://<your-server-or-tunnel-url>:3000/api/webhooks/github` (use Cloudflare Tunnel, Ngrok, or your public IP).
+3. **Webhook secret:** same value as `GITHUB_WEBHOOK_SECRET` in `.env`.
+4. Subscribe to events: `push`, `pull_request`, `issues`, `workflow_run`.
+5. Install the App on **All repositories** — new repos are auto-covered; route each repo with `/repo add`.
+
+**Per-repo alternative:** Repo **Settings → Webhooks → Add webhook** with the same payload URL, content type `application/json`, and the shared secret.
 
 ### 5. Deploy Slash Commands
 Register slash commands with Discord:

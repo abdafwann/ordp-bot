@@ -7,6 +7,7 @@ import {
 } from "discord.js";
 import { Command } from "../../../types/command.js";
 import { recipeRepository } from "../data/recipe.repository.js";
+import { formatIngredientQuantity } from "../domain/quantity.js";
 
 export const recipeCommand: Command = {
   data: new SlashCommandBuilder()
@@ -69,7 +70,8 @@ export const recipeCommand: Command = {
 
       const ingredientLines = recipe.ingredients.map((ing) => {
         const badge = ing.requirement === "optional" ? " *(Optional Spice)*" : "";
-        return `• **${ing.quantity}x ${ing.name}** @ \`${ing.timing}\`${badge}`;
+        const qty = formatIngredientQuantity(ing);
+        return `• **${qty}x ${ing.name}** @ \`${ing.timing}\`${badge}`;
       });
 
       const embed = new EmbedBuilder()

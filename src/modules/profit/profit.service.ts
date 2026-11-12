@@ -57,6 +57,37 @@ export class ProfitService {
     });
   }
 
+  async collectPrices(
+    guildId: string,
+    recipe: CookingRecipe
+  ): Promise<Map<string, ParsedRate>> {
+    const ingredientNames = recipe.ingredients.map((i) => i.name.toLowerCase());
+    const dbPrices = await prisma.ingredientPrice.findMany({
+      where: {
+        guildId,
+        name: { in: ingredientNames },
+      },
+    });
+
+    const pricesMap = new Map<string, ParsedRate>();
+    for (const p of dbPrices) {
+      pricesMap.set(
+        p.name,
+        p.wl === 0
+          ? { isFree: true, rate: null }
+          : {
+              isFree: false,
+              rate: {
+                items: p.items,
+                wl: p.wl,
+                currency: p.currency as "WL" | "DL" | "BGL",
+              },
+            }
+      );
+    }
+    return pricesMap;
+  }
+
   async setPrice(guildId: string, ingredientName: string, rateStr: string, userId: string) {
     const parsed = parseRate(rateStr);
     const name = ingredientName.toLowerCase().trim();
@@ -105,6 +136,7 @@ export class ProfitService {
     quantity?: number;
     includeSpices?: boolean;
     overridesStr?: string;
+    overrides?: Map<string, import("./domain/overrides.js").OverrideAction>;
   }): Promise<CookExecutionResult> {
     const { guildId, dishName, sellRateStr, quantity = 1, includeSpices = false, overridesStr } = params;
 
@@ -113,28 +145,10 @@ export class ProfitService {
       throw new RecipeNotFoundError(dishName);
     }
 
-    const overrides = parseOverrides(overridesStr);
+    const overrides = params.overrides ?? parseOverrides(overridesStr);
     const sellRate = sellRateStr ? parseRate(sellRateStr) : null;
 
-    const ingredientNames = recipe.ingredients.map((i) => i.name.toLowerCase());
-    const dbPrices = await prisma.ingredientPrice.findMany({
-      where: {
-        guildId,
-        name: { in: ingredientNames },
-      },
-    });
-
-    const pricesMap = new Map<string, ParsedRate>();
-    for (const p of dbPrices) {
-      pricesMap.set(p.name, {
-        isFree: p.wl === 0,
-        rate: {
-          items: p.items,
-          wl: p.wl,
-          currency: p.currency as "WL" | "DL" | "BGL",
-        },
-      });
-    }
+    const pricesMap = await this.collectPrices(guildId, recipe);
 
     try {
       const profit = calculateProfit({

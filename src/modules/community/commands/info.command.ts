@@ -3,6 +3,7 @@ import {
   EmbedBuilder,
   ChatInputCommandInteraction,
   GuildMember,
+  MessageFlags,
 } from "discord.js";
 import { Command } from "../../../types/command.js";
 
@@ -72,7 +73,7 @@ export const serverInfoCommand: Command = {
   async execute(interaction: ChatInputCommandInteraction) {
     const guild = interaction.guild;
     if (!guild) {
-      await interaction.reply({ content: "❌ This command must be used in a server.", ephemeral: true });
+      await interaction.reply({ content: "❌ This command must be used in a server.", flags: MessageFlags.Ephemeral });
       return;
     }
 
